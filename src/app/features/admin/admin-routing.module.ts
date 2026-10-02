@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AdminLayoutComponent } from './layout/admin-layout.component';
 import { CatalogoPermisosComponent } from './pages/catalogo-permisos/catalogo-permisos.component';
 import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component';
+import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
 
 const routes: Routes = [
@@ -13,6 +14,7 @@ const routes: Routes = [
       { path: '', pathMatch: 'full', component: HomeAdminComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'catalogo', component: CatalogoPermisosComponent },
+      { path: 'estadisticas', component: EstadisticasComponent },
     ],
   },
 ];

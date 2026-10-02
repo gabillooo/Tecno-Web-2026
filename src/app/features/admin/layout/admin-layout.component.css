@@ -1,0 +1,17 @@
+/* Footer siempre pegado al fondo aunque el contenido sea corto */
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-shell {
+  flex: 1;
+}
+
+/* Link de la sección actual */
+.site-header nav a.activo {
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 6px;
+}

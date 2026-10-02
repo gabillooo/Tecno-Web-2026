@@ -1,0 +1,33 @@
+/* ==========================================================================
+   login.component.css
+   Estilos propios del componente de Login.
+   Nota: variables, tipografía base, inputs y botones ya vienen de styles.css
+   global — aquí solo va lo específico de esta página.
+   ========================================================================== */
+
+.login-form {
+  display: grid;
+  max-width: 440px;
+  margin: 8vh auto;
+  padding: 26px;
+  gap: 9px;
+  background: var(--pale);
+  border-top: 5px solid var(--red);
+}
+
+/* Fila de botones: separados entre sí */
+.login-form button {
+  margin-top: 6px;
+}
+
+.login-form button + button {
+  margin-left: 12px;
+}
+
+/* --- Responsive --- */
+
+@media (max-width: 700px) {
+  .login-form {
+    margin: 4vh auto;
+  }
+}

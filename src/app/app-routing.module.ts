@@ -10,6 +10,11 @@ const routes: Routes = [
     children: []
   },
   {
+    path: 'auth',
+    loadChildren: () =>
+      import('./auth/auth.module').then((m) => m.AuthModule)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     canActivate: [homeRedirectGuard],

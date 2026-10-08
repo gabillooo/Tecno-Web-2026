@@ -1,19 +1,58 @@
 /* Estilos compartidos por las páginas del panel de administración */
 
+/* ---------- Tabla ---------- */
 .admin-tabla {
   width: 100%;
   padding: 0;
+  border: 0;
   border-collapse: collapse;
-}
-
-.admin-tabla th,
-.admin-tabla td {
-  padding: 10px;
-  border-bottom: 1px solid #ccc;
-  text-align: left;
+  background: transparent;
 }
 
 .admin-tabla th {
-  background: var(--navy);
-  color: #fff;
+  padding: 12px;
+  border-bottom: 2px solid var(--navy);
+  color: #5b6b7a;
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-align: left;
+  text-transform: uppercase;
 }
+
+.admin-tabla td {
+  padding: 16px 12px;
+  border-bottom: 1px solid #d4e2e8;
+  color: #4a5a68;
+  text-align: left;
+  vertical-align: middle;
+}
+
+/* Primera columna (folio / nombre) en negrita y color de texto principal */
+.admin-tabla td:first-child {
+  color: var(--ink);
+  font-weight: 700;
+}
+
+/* Filas alternas */
+.admin-tabla tbody tr:nth-child(even) {
+  background: var(--pale);
+}
+
+/* ---------- Chips de estado ---------- */
+.chip {
+  display: inline-block;
+  padding: 5px 12px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  font-size: .8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.chip-cian     { background: #e1f5fa; border-color: #3fb0cf; color: #0c4a66; }
+.chip-amarillo { background: #fff0c9; border-color: #e3a52f; color: #6b4a00; }
+.chip-verde    { background: #e3f6e8; border-color: #3aa75b; color: #17703a; }
+.chip-rojo     { background: #fbe3e1; border-color: #d9534f; color: #9b2c26; }
+.chip-gris     { background: #e9ecef; border-color: #b5bdc4; color: #495057; }

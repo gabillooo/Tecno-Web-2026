@@ -1,25 +1,55 @@
 /**
- * Estados posibles del ciclo de vida de una solicitud de permiso/licencia/patente.
- * El flujo típico es:
- * BORRADOR -> EN_REVISION -> (OBSERVACION -> EN_REVISION)* -> APROBADA -> EMITIDA
- *                          -> RECHAZADA
+ * Estados posibles de una solicitud de permiso/licencia/patente.
+ * Cada estado tiene una etiqueta visible y un color de chip (ver
+ * ESTADO_SOLICITUD_LABEL y ESTADO_SOLICITUD_COLOR más abajo).
  */
 export enum EstadoSolicitud {
-  BORRADOR = 'BORRADOR',           // El ciudadano aún está completando el formulario (no enviado)
-  EN_REVISION = 'EN REVISION',     // Enviada, pendiente de revisión por un administrador
-  OBSERVACION = 'OBSERVACION',     // El administrador solicitó correcciones al ciudadano
-  APROBADA = 'APROBADA',           // Aprobada, pendiente de emisión formal del documento
-  RECHAZADA = 'RECHAZADA',         // Rechazada definitivamente
-  EMITIDA = 'EMITIDA',             // Permiso emitido, trámite finalizado
+  RECIBIDO = 'RECIBIDO',                 // La solicitud fue ingresada
+  EN_REVISION = 'EN_REVISION',           // Pendiente de revisión por un administrador
+  EN_PROCESO = 'EN_PROCESO',             // El trámite está siendo gestionado
+  RESUELTO = 'RESUELTO',                 // Resuelto favorablemente
+  RECHAZADO = 'RECHAZADO',               // Rechazado definitivamente
+  CERRADO = 'CERRADO',                   // Trámite finalizado
+  PAGADO = 'PAGADO',                     // Pago realizado
+  PENDIENTE_PAGO = 'PENDIENTE_PAGO',     // A la espera del pago
+  VENCIDO = 'VENCIDO',                   // Plazo vencido
+  EN_CONVENIO = 'EN_CONVENIO',           // Pago acordado mediante convenio
+  DISPONIBLE = 'DISPONIBLE',             // Documento disponible para el ciudadano
+  NO_DISPONIBLE = 'NO_DISPONIBLE',       // Documento aún no disponible
 }
 
+/** Texto visible de cada estado */
 export const ESTADO_SOLICITUD_LABEL: Record<EstadoSolicitud, string> = {
-  [EstadoSolicitud.BORRADOR]: 'Borrador',
+  [EstadoSolicitud.RECIBIDO]: 'Recibido',
   [EstadoSolicitud.EN_REVISION]: 'En revisión',
-  [EstadoSolicitud.OBSERVACION]: 'Observación',
-  [EstadoSolicitud.APROBADA]: 'Aprobada',
-  [EstadoSolicitud.RECHAZADA]: 'Rechazada',
-  [EstadoSolicitud.EMITIDA]: 'Emitida',
+  [EstadoSolicitud.EN_PROCESO]: 'En proceso',
+  [EstadoSolicitud.RESUELTO]: 'Resuelto',
+  [EstadoSolicitud.RECHAZADO]: 'Rechazado',
+  [EstadoSolicitud.CERRADO]: 'Cerrado',
+  [EstadoSolicitud.PAGADO]: 'Pagado',
+  [EstadoSolicitud.PENDIENTE_PAGO]: 'Pendiente de pago',
+  [EstadoSolicitud.VENCIDO]: 'Vencido',
+  [EstadoSolicitud.EN_CONVENIO]: 'En convenio',
+  [EstadoSolicitud.DISPONIBLE]: 'Disponible',
+  [EstadoSolicitud.NO_DISPONIBLE]: 'No disponible',
+};
+
+/** Color del chip: se usa como sufijo de la clase CSS "chip-<color>" (admin-shared.css) */
+export type ColorChip = 'cian' | 'amarillo' | 'verde' | 'rojo' | 'gris';
+
+export const ESTADO_SOLICITUD_COLOR: Record<EstadoSolicitud, ColorChip> = {
+  [EstadoSolicitud.RECIBIDO]: 'cian',
+  [EstadoSolicitud.EN_REVISION]: 'cian',
+  [EstadoSolicitud.EN_PROCESO]: 'amarillo',
+  [EstadoSolicitud.RESUELTO]: 'verde',
+  [EstadoSolicitud.RECHAZADO]: 'rojo',
+  [EstadoSolicitud.CERRADO]: 'gris',
+  [EstadoSolicitud.PAGADO]: 'verde',
+  [EstadoSolicitud.PENDIENTE_PAGO]: 'amarillo',
+  [EstadoSolicitud.VENCIDO]: 'rojo',
+  [EstadoSolicitud.EN_CONVENIO]: 'cian',
+  [EstadoSolicitud.DISPONIBLE]: 'verde',
+  [EstadoSolicitud.NO_DISPONIBLE]: 'gris',
 };
 
 export enum TipoPermisoCategoria {

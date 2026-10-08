@@ -31,7 +31,7 @@ export class SolicitudesService {
       tipoPermisoId: 'evento',
       tipoPermisoNombre: 'Autorización de eventos',
       solicitanteId: 'Carlos Andrés Muñoz',
-      estado: EstadoSolicitud.APROBADA,
+      estado: EstadoSolicitud.RESUELTO,
       datosFormulario: {
         direccion: 'Plaza Central s/n',
         nombreEvento: 'Feria de emprendedores',
@@ -48,7 +48,7 @@ export class SolicitudesService {
       tipoPermisoId: 'via',
       tipoPermisoNombre: 'Ocupación de vía pública',
       solicitanteId: 'Javiera Ignacia Soto',
-      estado: EstadoSolicitud.RECHAZADA,
+      estado: EstadoSolicitud.RECHAZADO,
       datosFormulario: {
         direccion: 'Calle Los Robles 456',
         motivo: 'Instalación de andamios'
@@ -73,7 +73,7 @@ export class SolicitudesService {
       tipoPermisoId: 'patente',
       tipoPermisoNombre: 'Patente comercial',
       solicitanteId: 'Rodrigo Esteban Vargas',
-      estado: EstadoSolicitud.EMITIDA,
+      estado: EstadoSolicitud.CERRADO,
       datosFormulario: { direccion: 'Av. Providencia 2200' },
       documentos: [],
       observaciones: [],
@@ -86,7 +86,7 @@ export class SolicitudesService {
       tipoPermisoId: 'evento',
       tipoPermisoNombre: 'Autorización de eventos',
       solicitanteId: 'Antonia Belén Herrera',
-      estado: EstadoSolicitud.OBSERVACION,
+      estado: EstadoSolicitud.EN_PROCESO,
       datosFormulario: {
         direccion: 'Parque Municipal',
         nombreEvento: 'Concierto benéfico'
@@ -111,7 +111,7 @@ export class SolicitudesService {
       tipoPermisoId: 'via',
       tipoPermisoNombre: 'Ocupación de vía pública',
       solicitanteId: 'Diego Alonso Fuentes',
-      estado: EstadoSolicitud.BORRADOR,
+      estado: EstadoSolicitud.RECIBIDO,
       datosFormulario: {},
       documentos: [],
       observaciones: [],
@@ -146,7 +146,7 @@ export class SolicitudesService {
       tipoPermisoId,
       tipoPermisoNombre: nombres[tipoPermisoId] ?? 'Permiso municipal',
       solicitanteId: 'u-001',
-      estado: EstadoSolicitud.BORRADOR,
+      estado: EstadoSolicitud.RECIBIDO,
       datosFormulario: {},
       documentos: [],
       observaciones: [],
@@ -221,12 +221,12 @@ export class SolicitudesService {
   resolver(d: ResolverSolicitudDto): Observable<Solicitud> {
     const e =
       d.accion === 'APROBAR'
-        ? EstadoSolicitud.APROBADA
+        ? EstadoSolicitud.RESUELTO
         : d.accion === 'RECHAZAR'
-        ? EstadoSolicitud.RECHAZADA
+        ? EstadoSolicitud.RECHAZADO
         : d.accion === 'EMITIR'
-        ? EstadoSolicitud.EMITIDA
-        : EstadoSolicitud.OBSERVACION;
+        ? EstadoSolicitud.CERRADO
+        : EstadoSolicitud.EN_PROCESO;
 
     return this.cambiar(d.solicitudId, (s) => ({ ...s, estado: e }));
   }

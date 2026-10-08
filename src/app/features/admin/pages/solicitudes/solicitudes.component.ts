@@ -2,6 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Solicitud } from '../../../../core/models/solicitud.model';
 import { SolicitudesService } from '../../../../core/services/solicitudes.service';
+import {
+  EstadoSolicitud,
+  ESTADO_SOLICITUD_COLOR,
+  ESTADO_SOLICITUD_LABEL,
+} from '../../../../core/enums/estado-solicitud.enum';
 
 /**
  * Bandeja de solicitudes para el administrador: filtrar por estado/tipo,
@@ -21,6 +26,22 @@ export class SolicitudesComponent implements OnInit {
   ngOnInit(): void {
     this.solicitudes$ = this.solicitudesService.listarTodas();
   }
-  aprobar(id: string): void { this.solicitudesService.resolver({ solicitudId: id, accion: 'APROBAR' }).subscribe(); }
-  rechazar(id: string): void { this.solicitudesService.resolver({ solicitudId: id, accion: 'RECHAZAR', mensaje: 'Faltan antecedentes obligatorios.' }).subscribe(); }
+
+  aprobar(id: string): void {
+    this.solicitudesService.resolver({ solicitudId: id, accion: 'APROBAR' }).subscribe();
+  }
+
+  rechazar(id: string): void {
+    this.solicitudesService
+      .resolver({ solicitudId: id, accion: 'RECHAZAR', mensaje: 'Faltan antecedentes obligatorios.' })
+      .subscribe();
+  }
+
+  etiqueta(estado: EstadoSolicitud): string {
+    return ESTADO_SOLICITUD_LABEL[estado];
+  }
+
+  claseChip(estado: EstadoSolicitud): string {
+    return 'chip-' + ESTADO_SOLICITUD_COLOR[estado];
+  }
 }

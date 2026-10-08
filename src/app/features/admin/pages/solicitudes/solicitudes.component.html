@@ -16,7 +16,9 @@
       <td>{{ s.folio }}</td>
       <td>{{ s.solicitanteId }}</td>
       <td>{{ s.tipoPermisoNombre }}</td>
-      <td>{{ s.estado }}</td>
+      <td>
+        <span class="chip" [ngClass]="claseChip(s.estado)">{{ etiqueta(s.estado) }}</span>
+      </td>
       <td>{{ s.fechaActualizacion | date }}</td>
       <td><button type="button" (click)="aprobar(s.id)">Aprobar</button> <button type="button" class="secondary" (click)="rechazar(s.id)">Rechazar</button></td>
     </tr>

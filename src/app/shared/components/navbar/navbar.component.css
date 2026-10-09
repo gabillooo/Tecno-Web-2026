@@ -1,0 +1,165 @@
+/* Barra navy superior compartida por todo el portal */
+:host {
+  display: block;
+}
+
+.navbar {
+  background: var(--navy);
+  color: var(--blanco);
+}
+
+.navbar__interior {
+  display: flex;
+  align-items: stretch;
+  gap: 32px;
+  min-height: 64px;
+}
+
+/* Marca a la izquierda */
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--blanco);
+  text-decoration: none;
+}
+
+.marca__sigla {
+  padding-right: 12px;
+  border-right: 2px solid var(--cian);
+  font: 900 1.25rem var(--fuente-titulo);
+  letter-spacing: .04em;
+}
+
+.marca__nombre {
+  font: 700 1rem var(--fuente-titulo);
+}
+
+/* Apartados al centro */
+.enlaces {
+  display: flex;
+  align-items: stretch;
+  gap: 4px;
+}
+
+.enlace {
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  border-bottom: 3px solid transparent;
+  color: var(--celeste);
+  font-size: .95rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.enlace:hover {
+  color: var(--blanco);
+}
+
+.enlace.activo {
+  border-bottom-color: var(--cian);
+  color: var(--blanco);
+}
+
+/* Sistemas que aún no existen */
+.enlace--proximamente {
+  color: var(--gris-azulado);
+  cursor: not-allowed;
+}
+
+.enlace--proximamente:hover {
+  color: var(--gris-azulado);
+}
+
+/* Avatar con iniciales y menú de usuario a la derecha */
+.usuario {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+
+.avatar {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  padding: 0;
+  background: var(--cian);
+  border: 0;
+  border-radius: 50%;
+  color: var(--navy);
+  font: 700 .95rem var(--fuente-texto);
+  cursor: pointer;
+}
+
+.avatar:focus-visible {
+  outline-offset: 2px; /* sobre el avatar cian, el anillo necesita separación */
+}
+
+.menu {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 20;
+  width: 260px;
+  padding: 16px;
+  background: var(--blanco);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio-tarjeta);
+  box-shadow: 0 6px 20px rgb(17 47 78 / 18%);
+  color: var(--texto);
+}
+
+.menu__nombre {
+  margin: 0;
+  color: var(--navy);
+  font-weight: 700;
+}
+
+.menu__correo {
+  margin: 0 0 14px;
+  color: var(--tx2);
+  font-size: .875rem;
+  overflow-wrap: anywhere;
+}
+
+/* "Cerrar sesión" es de los pocos usos permitidos del rojo editorial */
+.menu__salir {
+  width: 100%;
+  min-height: 40px;
+  background: var(--blanco);
+  border: 2px solid var(--rojo);
+  border-radius: var(--radio-boton);
+  color: var(--rojo);
+  font: 700 .95rem var(--fuente-texto);
+  cursor: pointer;
+}
+
+.menu__salir:hover {
+  background: var(--rojo-claro);
+}
+
+@media (max-width: 900px) {
+  .navbar__interior {
+    flex-wrap: wrap;
+    gap: 0 16px;
+  }
+
+  .marca,
+  .usuario {
+    min-height: 64px;
+  }
+
+  .enlaces {
+    order: 3;
+    width: 100%;
+    overflow-x: auto;
+  }
+
+  .enlace {
+    min-height: 44px;
+    white-space: nowrap;
+  }
+}

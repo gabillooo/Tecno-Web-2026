@@ -1,12 +1,10 @@
 @import '../../admin-shared.css';
 
-/* Separación entre los botones Aprobar / Rechazar */
-.admin-tabla td:last-child {
-  display: flex;
-  gap: 8px;
-  justify-content: flex-end;
-}
-
-.admin-tabla td:last-child button {
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
   white-space: nowrap;
 }

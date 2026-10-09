@@ -34,7 +34,7 @@ export const ESTADO_SOLICITUD_LABEL: Record<EstadoSolicitud, string> = {
   [EstadoSolicitud.NO_DISPONIBLE]: 'No disponible',
 };
 
-/** Color del chip: se usa como sufijo de la clase CSS "chip-<color>" (admin-shared.css) */
+/** Color de la pill: sufijo de la clase CSS "pill--<color>" (styles.css) */
 export type ColorChip = 'cian' | 'amarillo' | 'verde' | 'rojo' | 'gris';
 
 export const ESTADO_SOLICITUD_COLOR: Record<EstadoSolicitud, ColorChip> = {

@@ -1,25 +1,43 @@
-<h1>Gestión del catálogo de permisos</h1>
-<button type="button">Nuevo tipo de permiso</button>
+<div class="fila fila--separada cabecera">
+  <h1>Gestión del catálogo de permisos</h1>
+  <button type="button" class="boton">Nuevo tipo de permiso</button>
+</div>
 
-<table class="admin-tabla" *ngIf="tiposPermiso$ | async as tipos">
-  <thead>
-    <tr>
-      <th>Nombre</th>
-      <th>Categoría</th>
-      <th>Tarifa</th>
-      <th>Plazo</th>
-      <th>Activo</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let tipo of tipos">
-      <td>{{ tipo.nombre }}</td>
-      <td>{{ tipo.categoria }}</td>
-      <td>{{ tipo.tarifa | currency:'CLP' }}</td>
-      <td>{{ tipo.plazoEstimadoDias }} días</td>
-      <td>{{ tipo.activo ? 'Sí' : 'No' }}</td>
-      <td><button type="button">Editar</button></td>
-    </tr>
-  </tbody>
-</table>
+<ng-container *ngIf="tiposPermiso$ | async as tipos">
+  <div class="tabla-contenedor" *ngIf="tipos.length; else sinTipos">
+    <table class="admin-tabla">
+      <thead>
+        <tr>
+          <th>Nombre</th>
+          <th>Categoría</th>
+          <th>Tarifa</th>
+          <th>Plazo</th>
+          <th>Activo</th>
+          <th><span class="visualmente-oculto">Acciones</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tipo of tipos">
+          <td>{{ tipo.nombre }}</td>
+          <td>{{ tipo.categoria }}</td>
+          <td>{{ tipo.tarifa | currency:'CLP' }}</td>
+          <td>{{ tipo.plazoEstimadoDias }} días</td>
+          <td>
+            <span class="pill" [ngClass]="tipo.activo ? 'pill--verde' : 'pill--gris'">
+              {{ tipo.activo ? 'Sí' : 'No' }}
+            </span>
+          </td>
+          <td>
+            <div class="acciones">
+              <button type="button" class="boton boton--contorno boton--pequeno">Editar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #sinTipos>
+    <p class="aviso">Aún no hay tipos de permiso en el catálogo.</p>
+  </ng-template>
+</ng-container>

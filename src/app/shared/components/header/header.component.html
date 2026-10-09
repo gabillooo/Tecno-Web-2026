@@ -1,0 +1,45 @@
+<div class="gov-banner">
+  <div class="gov-banner-container">
+    Un sitio oficial de la Municipalidad de New York
+  </div>
+</div>
+
+<header class="site-header">
+  <div class="header-container">
+    <div class="brand">
+      <div class="nyc-logo">NY</div>
+      <div class="brand-text">
+        <h2>Municipalidad de New York</h2>
+        <span>{{ subtitulo }}</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav" *ngIf="usuario$ | async as usuario" aria-label="Navegación principal">
+  <div class="nav-container">
+    <ul class="nav-links" *ngIf="enlaces$ | async as enlaces">
+      <li *ngFor="let enlace of enlaces">
+        <a
+          [routerLink]="enlace.ruta"
+          routerLinkActive="activo"
+          [routerLinkActiveOptions]="{ exact: !!enlace.exacto }"
+        >
+          <span class="material-symbols-outlined" aria-hidden="true">{{ enlace.icono }}</span>
+          {{ enlace.etiqueta }}
+        </a>
+      </li>
+    </ul>
+
+    <div class="nav-usuario">
+      <span class="nav-usuario-nombre">
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
+        {{ usuario.nombre }}
+      </span>
+      <button type="button" class="btn-salir" (click)="cerrarSesion()">
+        <span class="material-symbols-outlined" aria-hidden="true">logout</span>
+        Cerrar sesión
+      </button>
+    </div>
+  </div>
+</nav>

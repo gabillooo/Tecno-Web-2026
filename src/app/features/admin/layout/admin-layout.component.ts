@@ -1,17 +1,30 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../core/services/auth.service';
+import { NavigationEnd, Router } from '@angular/router';
+import { Observable, filter, map, startWith } from 'rxjs';
 
+/**
+ * Contenedor del área de administración: subnavegación de pestañas
+ * (Solicitudes · Catálogo · Estadísticas) y la página activa debajo.
+ * El navbar y el footer los dibuja AppComponent.
+ */
 @Component({
   selector: 'app-admin-layout',
   templateUrl: './admin-layout.component.html',
   styleUrls: ['./admin-layout.component.css'],
 })
 export class AdminLayoutComponent {
-  constructor(public readonly auth: AuthService, private readonly router: Router) {}
+  /** Las pestañas se ocultan en la portada del panel (/admin). */
+  readonly mostrarPestanas$: Observable<boolean>;
 
-  salir(): void {
-    this.auth.logout();
-    this.router.navigateByUrl('/auth/login');
+  constructor(private readonly router: Router) {
+    this.mostrarPestanas$ = this.router.events.pipe(
+      filter((e): e is NavigationEnd => e instanceof NavigationEnd),
+      map((e) => this.esSubpagina(e.urlAfterRedirects)),
+      startWith(this.esSubpagina(this.router.url))
+    );
+  }
+
+  private esSubpagina(url: string): boolean {
+    return url.split('?')[0].split('#')[0] !== '/admin';
   }
 }

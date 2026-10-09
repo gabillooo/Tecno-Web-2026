@@ -1,23 +1,7 @@
-<header class="site-header">
-  <a class="brand" routerLink="/admin">
-    Municipalidad de New York
-    <small>ADMINISTRACIÓN DE PERMISOS</small>
-  </a>
-  <nav>
-    <a routerLink="/admin" routerLinkActive="activo" [routerLinkActiveOptions]="{ exact: true }">Inicio</a>
-    <a routerLink="/admin/solicitudes" routerLinkActive="activo">Solicitudes</a>
-    <a routerLink="/admin/catalogo" routerLinkActive="activo">Catálogo</a>
-    <a routerLink="/admin/estadisticas" routerLinkActive="activo">Estadísticas</a>
-  </nav>
-  <button type="button" class="link-button" *ngIf="auth.usuario$ | async as usuario" (click)="salir()">
-    Salir · {{ usuario.nombre }}
-  </button>
-</header>
+<nav class="pestanas" *ngIf="mostrarPestanas$ | async" aria-label="Administración">
+  <a routerLink="/admin/solicitudes" routerLinkActive="activa">Solicitudes</a>
+  <a routerLink="/admin/catalogo" routerLinkActive="activa">Catálogo</a>
+  <a routerLink="/admin/estadisticas" routerLinkActive="activa">Estadísticas</a>
+</nav>
 
-<main class="page-shell">
-  <router-outlet></router-outlet>
-</main>
-
-<footer class="site-footer">
-  Panel administrativo
-</footer>
+<router-outlet></router-outlet>

@@ -1,26 +1,39 @@
 <h1>Solicitudes</h1>
 
-<table class="admin-tabla" *ngIf="solicitudes$ | async as solicitudes">
-  <thead>
-    <tr>
-      <th>Folio</th>
-      <th>Ciudadano</th>
-      <th>Permiso</th>
-      <th>Estado</th>
-      <th>Fecha</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let s of solicitudes">
-      <td>{{ s.folio }}</td>
-      <td>{{ s.solicitanteId }}</td>
-      <td>{{ s.tipoPermisoNombre }}</td>
-      <td>
-        <span class="chip" [ngClass]="claseChip(s.estado)">{{ etiqueta(s.estado) }}</span>
-      </td>
-      <td>{{ s.fechaActualizacion | date }}</td>
-      <td><button type="button" (click)="aprobar(s.id)">Aprobar</button> <button type="button" class="secondary" (click)="rechazar(s.id)">Rechazar</button></td>
-    </tr>
-  </tbody>
-</table>
+<ng-container *ngIf="solicitudes$ | async as solicitudes">
+  <div class="tabla-contenedor" *ngIf="solicitudes.length; else sinSolicitudes">
+    <table class="admin-tabla">
+      <thead>
+        <tr>
+          <th>N° de solicitud</th>
+          <th>Ciudadano</th>
+          <th>Trámite</th>
+          <th>Estado</th>
+          <th>Fecha</th>
+          <th><span class="visualmente-oculto">Acciones</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let s of solicitudes">
+          <td>{{ s.folio }}</td>
+          <td>{{ s.solicitanteId }}</td>
+          <td>{{ s.tipoPermisoNombre }}</td>
+          <td>
+            <span class="pill" [ngClass]="clasePill(s.estado)">{{ etiqueta(s.estado) }}</span>
+          </td>
+          <td>{{ s.fechaActualizacion | date }}</td>
+          <td>
+            <div class="acciones">
+              <button type="button" class="boton boton--exito boton--pequeno" (click)="aprobar(s.id)">Aprobar</button>
+              <button type="button" class="boton boton--contorno boton--pequeno" (click)="rechazar(s.id)">Rechazar</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #sinSolicitudes>
+    <p class="aviso">No hay solicitudes por revisar.</p>
+  </ng-template>
+</ng-container>

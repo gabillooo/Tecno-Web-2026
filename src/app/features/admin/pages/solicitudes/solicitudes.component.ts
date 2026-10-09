@@ -41,7 +41,7 @@ export class SolicitudesComponent implements OnInit {
     return ESTADO_SOLICITUD_LABEL[estado];
   }
 
-  claseChip(estado: EstadoSolicitud): string {
-    return 'chip-' + ESTADO_SOLICITUD_COLOR[estado];
+  clasePill(estado: EstadoSolicitud): string {
+    return 'pill--' + ESTADO_SOLICITUD_COLOR[estado];
   }
 }

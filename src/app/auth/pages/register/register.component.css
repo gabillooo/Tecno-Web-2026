@@ -1,0 +1,24 @@
+/* Tarjeta de registro centrada. Colores, campos, botones y avisos vienen de styles.css. */
+.register {
+  max-width: 680px;
+  margin: 2vh auto 0;
+}
+
+.register h1 {
+  font-size: 1.625rem;
+}
+
+.intro {
+  margin: 0 0 20px;
+  font-size: .95rem;
+}
+
+/* Las ayudas breves quedan pegadas al campo que explican */
+.campo-grupo .texto-suave {
+  margin: 0;
+}
+
+.pie-tarjeta {
+  margin: 20px 0 0;
+  text-align: center;
+}

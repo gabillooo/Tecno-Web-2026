@@ -1,9 +1,15 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, delay, of, tap, throwError } from 'rxjs';
-import { LoginDto, SesionDto, Usuario } from '../models/usuario.model';
+import {LoginDto,RegistroDto,SesionDto,Usuario,} from '../models/usuario.model';
 import { RolUsuario } from '../enums/estado-solicitud.enum';
 
 const STORAGE_KEY = 'permisos_sesion';
+const USUARIOS_KEY = 'permisos_usuarios';
+const ADMIN_EMAIL = 'admin@municipal.cl';
+
+interface UsuarioRegistrado extends Usuario {
+  password: string;
+}
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -14,27 +20,67 @@ export class AuthService {
   readonly usuario$ = this.usuarioSubject.asObservable();
 
   login(dto: LoginDto): Observable<SesionDto> {
-    if (
-      dto.email.toLowerCase() !== 'admin@municipal.cl' ||
-      dto.password !== '1234'
-    ) {
-      return throwError(() => new Error('Credenciales inválidas'));
+    const email = dto.email.toLowerCase();
+    let sesion: SesionDto | null = null;
+
+    if (email === ADMIN_EMAIL && dto.password === '1234') {
+      sesion = {
+        token: 'demo-token-2026',
+        usuario: {
+          id: 'u-admin',
+          nombre: 'Admin',
+          email: dto.email,
+          rol: RolUsuario.ADMINISTRADOR,
+        },
+      };
+    } else {
+      const encontrado = this.leerUsuarios().find(
+        (u) => u.email === email && u.password === dto.password
+      );
+      if (encontrado) {
+        const { password, ...usuario } = encontrado;
+        sesion = { token: `demo-token-${usuario.id}`, usuario };
+      }
     }
 
-    const sesion: SesionDto = {
-      token: 'demo-token-2026',
-      usuario: {
-        id: 'u-admin',
-        nombre: 'Admin',
-        email: dto.email,
-        rol: RolUsuario.ADMINISTRADOR
-      }
-    };
+    if (!sesion) {
+      return throwError(() => new Error('Credenciales inválidas'));
+    }
 
     return of(sesion).pipe(
       delay(350),
       tap((value) => this.guardar(value))
     );
+  }
+
+  register(dto: RegistroDto): Observable<Usuario> {
+    const email = dto.email.trim().toLowerCase();
+    const rut = dto.rut.trim();
+    const usuarios = this.leerUsuarios();
+
+    if (email === ADMIN_EMAIL || usuarios.some((u) => u.email === email)) {
+      return throwError(
+        () => new Error('Ya existe una cuenta con ese correo')
+      );
+    }
+    if (usuarios.some((u) => u.rut === rut)) {
+      return throwError(() => new Error('Ya existe una cuenta con ese RUT'));
+    }
+
+    const nuevo: UsuarioRegistrado = {
+      id: `u-${Date.now()}`,
+      nombre: dto.nombre.trim(),
+      email,
+      rut,
+      rol: RolUsuario.CIUDADANO, // el rol se fija aquí, no viene del formulario
+      password: dto.password,
+    };
+
+    usuarios.push(nuevo);
+    localStorage.setItem(USUARIOS_KEY, JSON.stringify(usuarios));
+
+    const { password, ...usuario } = nuevo;
+    return of(usuario).pipe(delay(350));
   }
 
   perfil(): Promise<Usuario | null> {
@@ -69,6 +115,15 @@ export class AuthService {
       return raw ? (JSON.parse(raw) as SesionDto) : null;
     } catch {
       return null;
+    }
+  }
+
+  private leerUsuarios(): UsuarioRegistrado[] {
+    try {
+      const raw = localStorage.getItem(USUARIOS_KEY);
+      return raw ? (JSON.parse(raw) as UsuarioRegistrado[]) : [];
+    } catch {
+      return [];
     }
   }
 }

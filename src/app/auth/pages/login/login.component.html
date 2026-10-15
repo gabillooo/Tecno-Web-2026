@@ -45,6 +45,10 @@
         <span class="girador" *ngIf="cargando" aria-hidden="true"></span>
         {{ cargando ? 'Ingresando...' : 'Ingresar' }}
       </button>
+
+      <p class="texto-suave intro">
+        ¿No tienes cuenta? <a routerLink="/auth/register">Regístrate como ciudadano</a>
+      </p>
     </form>
   </div>
 </section>

@@ -13,6 +13,14 @@ export interface LoginDto {
   password: string;
 }
 
+export interface RegistroDto {
+  nombre: string;
+  email: string;
+  rut: string;
+  telefono?: string;
+  password: string;
+}
+
 export interface SesionDto {
   token: string;
   usuario: Usuario;

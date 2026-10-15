@@ -1,18 +1,19 @@
 @import '../../admin-shared.css';
 
-/* Separación entre el título y el botón de acción principal */
-h1 + button {
-  display: inline-block;
-  margin: 8px 0 24px;
+/* Título a la izquierda y acción principal a la derecha */
+.cabecera {
+  margin-bottom: 20px;
 }
 
-/* Columna "Activo": resalta el valor para escanear la tabla más rápido */
-.admin-tabla td:nth-child(5) {
-  font-weight: 700;
-  text-align: center;
+.cabecera h1 {
+  margin: 0;
 }
 
-/* Botón "Editar" alineado a la derecha de su celda */
-.admin-tabla td:last-child {
-  text-align: right;
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }

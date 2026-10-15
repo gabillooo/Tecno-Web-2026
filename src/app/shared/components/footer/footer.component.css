@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.pie {
+  padding: 28px 0;
+  background: var(--navy);
+  color: var(--blanco);
+}
+
+.pie__interior {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px 24px;
+}
+
+h4 {
+  margin: 0 0 6px;
+  font: 700 1rem var(--fuente-titulo);
+}
+
+p {
+  margin: 0;
+  color: var(--celeste);
+  font-size: .95rem;
+}
+
+.pie__sistema {
+  font-size: .875rem;
+}

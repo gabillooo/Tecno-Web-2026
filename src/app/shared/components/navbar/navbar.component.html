@@ -1,0 +1,44 @@
+<header class="navbar">
+  <div class="contenedor navbar__interior" *ngIf="{ usuario: usuario$ | async, url: url$ | async } as vm">
+    <a class="marca" [routerLink]="vm.usuario ? '/admin' : '/auth/login'">
+      <span class="marca__sigla">NYC</span>
+      <span class="marca__nombre">Permisos y patentes</span>
+    </a>
+
+    <nav class="enlaces" *ngIf="vm.usuario" aria-label="Navegación principal">
+      <ng-container *ngFor="let enlace of enlaces">
+        <a
+          *ngIf="!enlace.proximamente"
+          class="enlace"
+          [routerLink]="enlace.ruta"
+          [class.activo]="esActivo(enlace, vm.url)"
+          [attr.aria-current]="esActivo(enlace, vm.url) ? 'page' : null"
+        >{{ enlace.etiqueta }}</a>
+
+        <span
+          *ngIf="enlace.proximamente"
+          class="enlace enlace--proximamente"
+          title="Próximamente"
+          aria-disabled="true"
+        >{{ enlace.etiqueta }}</span>
+      </ng-container>
+    </nav>
+
+    <div class="usuario" *ngIf="vm.usuario as usuario">
+      <button
+        type="button"
+        class="avatar"
+        (click)="alternarMenu()"
+        aria-haspopup="true"
+        [attr.aria-expanded]="menuAbierto"
+        [attr.aria-label]="'Menú de ' + usuario.nombre"
+      >{{ iniciales(usuario) }}</button>
+
+      <div class="menu" *ngIf="menuAbierto">
+        <p class="menu__nombre">{{ usuario.nombre }}</p>
+        <p class="menu__correo">{{ usuario.email }}</p>
+        <button type="button" class="menu__salir" (click)="cerrarSesion()">Cerrar sesión</button>
+      </div>
+    </div>
+  </div>
+</header>

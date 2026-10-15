@@ -1,16 +1,27 @@
 <h1>Estadísticas</h1>
 
-<div *ngIf="estadisticas$ | async as stats" class="estadisticas-grid">
-  <section>
-    <h2>Por estado</h2>
-    <ul>
-      <li *ngFor="let entry of stats.porEstado | keyvalue">{{ entry.key }}: {{ entry.value }}</li>
-    </ul>
+<div class="grilla grilla--2" *ngIf="estadisticas$ | async as stats">
+  <section class="tarjeta" aria-labelledby="por-estado">
+    <div class="tarjeta__cuerpo">
+      <h3 id="por-estado">Solicitudes por estado</h3>
+      <ul class="lista-datos">
+        <li *ngFor="let entry of stats.porEstado | keyvalue">
+          <span class="pill" [ngClass]="clasePill(entry.key)">{{ etiqueta(entry.key) }}</span>
+          <strong class="cifra">{{ entry.value }}</strong>
+        </li>
+      </ul>
+    </div>
   </section>
-  <section>
-    <h2>Por tipo de permiso</h2>
-    <ul>
-      <li *ngFor="let entry of stats.porTipo | keyvalue">{{ entry.key }}: {{ entry.value }}</li>
-    </ul>
+
+  <section class="tarjeta" aria-labelledby="por-tipo">
+    <div class="tarjeta__cuerpo">
+      <h3 id="por-tipo">Solicitudes por tipo de permiso</h3>
+      <ul class="lista-datos">
+        <li *ngFor="let entry of stats.porTipo | keyvalue">
+          <span>{{ entry.key }}</span>
+          <strong class="cifra">{{ entry.value }}</strong>
+        </li>
+      </ul>
+    </div>
   </section>
 </div>

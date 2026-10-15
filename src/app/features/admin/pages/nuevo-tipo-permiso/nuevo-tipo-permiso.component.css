@@ -1,0 +1,69 @@
+/* Título a la izquierda y vuelta al catálogo a la derecha */
+.cabecera {
+  margin-bottom: 20px;
+}
+
+.cabecera h1 {
+  margin: 0;
+}
+
+/* Formulario en una tarjeta de ancho cómodo para leer */
+.formulario {
+  max-width: 860px;
+}
+
+.formulario h2 {
+  margin-bottom: 16px;
+}
+
+.seccion-titulo {
+  margin-top: 28px;
+}
+
+.casilla {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.casilla input {
+  width: 20px;
+  height: 20px;
+  accent-color: var(--navy);
+}
+
+/* Lista de requisitos */
+.requisito {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+  margin-bottom: 12px;
+}
+
+.requisito .campo {
+  flex: 1 1 260px;
+  width: auto;
+}
+
+.requisito__error {
+  flex-basis: 100%;
+}
+
+.aviso-error {
+  margin-top: 20px;
+}
+
+.pie-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 28px;
+}
+
+.pie-formulario--izquierda {
+  justify-content: flex-start;
+  margin-top: 16px;
+}

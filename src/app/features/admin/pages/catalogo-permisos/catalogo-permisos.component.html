@@ -1,6 +1,6 @@
 <div class="fila fila--separada cabecera">
   <h1>Gestión del catálogo de permisos</h1>
-  <button type="button" class="boton">Nuevo tipo de permiso</button>
+  <a class="boton" routerLink="/admin/catalogo/nuevo">Nuevo tipo de permiso</a>
 </div>
 
 <ng-container *ngIf="tiposPermiso$ | async as tipos">

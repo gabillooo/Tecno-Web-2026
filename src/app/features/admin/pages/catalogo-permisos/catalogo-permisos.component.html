@@ -29,7 +29,11 @@
           </td>
           <td>
             <div class="acciones">
-              <button type="button" class="boton boton--contorno boton--pequeno">Editar</button>
+              <a
+                class="boton boton--contorno boton--pequeno"
+                [routerLink]="['/admin/catalogo', tipo.id, 'editar']"
+                [attr.aria-label]="'Editar ' + tipo.nombre"
+              >Editar</a>
             </div>
           </td>
         </tr>

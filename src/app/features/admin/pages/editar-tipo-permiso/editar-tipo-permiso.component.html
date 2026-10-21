@@ -1,0 +1,159 @@
+<div class="fila fila--separada cabecera">
+    <h1>Editar tipo de permiso</h1>
+    <a class="boton boton--contorno" routerLink="/admin/catalogo">Volver al catálogo</a>
+  </div>
+  
+  <ng-container *ngIf="!noEncontrado; else noExiste">
+    <section class="tarjeta formulario" *ngIf="!actualizado; else exito">
+      <form class="tarjeta__cuerpo" [formGroup]="form" (ngSubmit)="guardar()">
+        <h2>Datos del permiso</h2>
+  
+        <div class="campo-grupo">
+          <label class="etiqueta" for="nombre">Nombre</label>
+          <input
+            id="nombre"
+            class="campo"
+            type="text"
+            formControlName="nombre"
+            maxlength="80"
+            [class.campo--error]="form.controls.nombre.touched && form.controls.nombre.invalid"
+          />
+          <p class="campo-error" *ngIf="form.controls.nombre.touched && form.controls.nombre.errors?.['required']">
+            ✕ Ingresa el nombre del permiso.
+          </p>
+        </div>
+  
+        <div class="campo-grupo">
+          <label class="etiqueta" for="categoria">Categoría</label>
+          <select id="categoria" class="campo" formControlName="categoria">
+            <option *ngFor="let c of categorias" [value]="c">{{ etiquetaCategoria(c) }}</option>
+          </select>
+        </div>
+  
+        <div class="campo-grupo">
+          <label class="etiqueta" for="descripcion">Descripción</label>
+          <textarea
+            id="descripcion"
+            class="campo"
+            rows="3"
+            formControlName="descripcion"
+            maxlength="300"
+            [class.campo--error]="form.controls.descripcion.touched && form.controls.descripcion.invalid"
+          ></textarea>
+          <p class="campo-error" *ngIf="form.controls.descripcion.touched && form.controls.descripcion.errors?.['required']">
+            ✕ Describe brevemente para qué sirve el permiso.
+          </p>
+        </div>
+  
+        <div class="grilla grilla--2">
+          <div class="campo-grupo">
+            <label class="etiqueta" for="tarifa">Tarifa (CLP)</label>
+            <input
+              id="tarifa"
+              class="campo"
+              type="number"
+              min="0"
+              step="1"
+              formControlName="tarifa"
+              [class.campo--error]="form.controls.tarifa.touched && form.controls.tarifa.invalid"
+            />
+            <p class="campo-error" *ngIf="form.controls.tarifa.touched && form.controls.tarifa.invalid">
+              ✕ Ingresa una tarifa de 0 o más.
+            </p>
+          </div>
+  
+          <div class="campo-grupo">
+            <label class="etiqueta" for="plazo">Plazo estimado (días)</label>
+            <input
+              id="plazo"
+              class="campo"
+              type="number"
+              min="1"
+              step="1"
+              formControlName="plazoEstimadoDias"
+              [class.campo--error]="form.controls.plazoEstimadoDias.touched && form.controls.plazoEstimadoDias.invalid"
+            />
+            <p class="campo-error" *ngIf="form.controls.plazoEstimadoDias.touched && form.controls.plazoEstimadoDias.invalid">
+              ✕ El plazo debe ser de al menos 1 día.
+            </p>
+          </div>
+        </div>
+  
+        <label class="casilla">
+          <input type="checkbox" formControlName="activo" />
+          Disponible para solicitudes
+        </label>
+  
+        <h2 class="seccion-titulo">Requisitos</h2>
+  
+        <p class="texto-suave" *ngIf="!requisitos.length">Este permiso no exige requisitos.</p>
+  
+        <div formArrayName="requisitos">
+          <div class="requisito" *ngFor="let req of requisitos.controls; let i = index" [formGroupName]="i">
+            <input
+              class="campo"
+              type="text"
+              formControlName="descripcion"
+              placeholder="Ej.: RUT del solicitante"
+              [attr.aria-label]="'Descripción del requisito ' + (i + 1)"
+              [class.campo--error]="req.controls.descripcion.touched && req.controls.descripcion.invalid"
+            />
+            <label class="casilla">
+              <input type="checkbox" formControlName="obligatorio" />
+              Obligatorio
+            </label>
+            <button
+              type="button"
+              class="boton boton--contorno boton--pequeno"
+              (click)="quitarRequisito(i)"
+              [attr.aria-label]="'Quitar requisito ' + (i + 1)"
+            >Quitar</button>
+            <p class="campo-error requisito__error" *ngIf="req.controls.descripcion.touched && req.controls.descripcion.invalid">
+              ✕ Escribe el requisito o quita esta fila.
+            </p>
+          </div>
+        </div>
+  
+        <button type="button" class="boton boton--contorno boton--pequeno" (click)="agregarRequisito()">
+          Agregar requisito
+        </button>
+  
+        <div class="alerta alerta--error aviso-error" role="alert" *ngIf="errorMensaje">{{ errorMensaje }}</div>
+  
+        <div class="pie-formulario">
+          <a class="boton boton--contorno" routerLink="/admin/catalogo">Cancelar</a>
+          <button type="submit" class="boton" [class.boton--cargando]="guardando" [disabled]="guardando">
+            <span class="girador" *ngIf="guardando" aria-hidden="true"></span>
+            {{ guardando ? 'Guardando...' : 'Guardar cambios' }}
+          </button>
+        </div>
+      </form>
+    </section>
+  </ng-container>
+  
+  <ng-template #exito>
+    <section class="tarjeta formulario">
+      <div class="tarjeta__cuerpo">
+        <div class="alerta alerta--ok" role="status">
+          Se guardaron los cambios del tipo de permiso «{{ actualizado?.nombre }}».
+        </div>
+        <div class="pie-formulario pie-formulario--izquierda">
+          <a class="boton" routerLink="/admin/catalogo">Volver al catálogo</a>
+          <button type="button" class="boton boton--contorno" (click)="seguirEditando()">Seguir editando</button>
+        </div>
+      </div>
+    </section>
+  </ng-template>
+  
+  <ng-template #noExiste>
+    <section class="tarjeta formulario">
+      <div class="tarjeta__cuerpo">
+        <div class="alerta alerta--error" role="alert">
+          No se encontró el tipo de permiso que intentas editar.
+        </div>
+        <div class="pie-formulario pie-formulario--izquierda">
+          <a class="boton" routerLink="/admin/catalogo">Volver al catálogo</a>
+        </div>
+      </div>
+    </section>
+  </ng-template>

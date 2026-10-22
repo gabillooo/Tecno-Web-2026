@@ -1,7 +1,8 @@
-/* Tarjeta de registro centrada. Colores, campos, botones y avisos vienen de styles.css. */
+/* Mantiene la misma tarjeta centrada y compacta que la pantalla de acceso. */
 .register {
-  max-width: 680px;
-  margin: 2vh auto 0;
+  width: 100%;
+  max-width: 440px;
+  margin: 4vh auto 0;
 }
 
 .register h1 {
@@ -13,6 +14,12 @@
   font-size: .95rem;
 }
 
+/* El formulario sigue el mismo flujo vertical que el login. */
+.register .grilla--2 {
+  grid-template-columns: 1fr;
+  gap: 0;
+}
+
 /* Las ayudas breves quedan pegadas al campo que explican */
 .campo-grupo .texto-suave {
   margin: 0;
@@ -21,4 +28,10 @@
 .pie-tarjeta {
   margin: 20px 0 0;
   text-align: center;
+}
+
+@media (max-width: 488px) {
+  .register {
+    width: calc(100% - 32px);
+  }
 }

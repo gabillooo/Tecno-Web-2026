@@ -1,0 +1,25 @@
+/* Tarjetas alineadas como las opciones del panel de administración. */
+.tarjeta {
+  display: flex;
+}
+
+.carta {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+}
+
+.carta h3 {
+  min-height: 40px;
+}
+
+.carta p {
+  margin: 0 0 20px;
+  font-size: .95rem;
+}
+
+.carta__pie {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: auto;
+}

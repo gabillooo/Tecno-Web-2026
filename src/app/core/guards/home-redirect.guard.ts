@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, Router, UrlTree } from '@angular/router';
 import { AuthService } from '../services/auth.service';
+import { RolUsuario } from '../enums/estado-solicitud.enum';
 
 @Injectable({ providedIn: 'root' })
 export class homeRedirectGuard implements CanActivate {
@@ -11,7 +12,10 @@ export class homeRedirectGuard implements CanActivate {
 
   canActivate(): boolean | UrlTree {
     if (this.auth.usuarioActual) {
-      return this.router.createUrlTree(['/admin']);
+      const inicio = this.auth.usuarioActual.rol === RolUsuario.ADMINISTRADOR
+        ? '/admin'
+        : '/ciudadano';
+      return this.router.createUrlTree([inicio]);
     }
     return this.router.createUrlTree(['/auth/login']);
   }

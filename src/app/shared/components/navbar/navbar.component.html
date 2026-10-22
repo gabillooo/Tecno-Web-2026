@@ -1,12 +1,12 @@
 <header class="navbar">
   <div class="contenedor navbar__interior" *ngIf="{ usuario: usuario$ | async, url: url$ | async } as vm">
-    <a class="marca" [routerLink]="vm.usuario ? '/admin' : '/auth/login'">
+    <a class="marca" [routerLink]="vm.usuario ? inicioPara(vm.usuario) : '/auth/login'">
       <span class="marca__sigla">NYC</span>
       <span class="marca__nombre">Permisos y patentes</span>
     </a>
 
     <nav class="enlaces" *ngIf="vm.usuario" aria-label="Navegación principal">
-      <ng-container *ngFor="let enlace of enlaces">
+      <ng-container *ngFor="let enlace of enlacesPara(vm.usuario)">
         <a
           *ngIf="!enlace.proximamente"
           class="enlace"

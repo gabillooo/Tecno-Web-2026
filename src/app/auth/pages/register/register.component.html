@@ -35,7 +35,7 @@
             [attr.aria-invalid]="form.controls.documento.touched && form.controls.documento.invalid"
           />
           <p class="texto-suave" *ngIf="!(form.controls.documento.touched && form.controls.documento.invalid)">
-            RUT o CI.
+            RUT.
           </p>
           <p class="campo-error" *ngIf="form.controls.documento.touched && form.controls.documento.errors?.['required']">
             ✕ Ingresa tu documento de identidad.

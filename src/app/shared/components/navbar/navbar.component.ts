@@ -3,6 +3,7 @@ import { NavigationEnd, Router } from '@angular/router';
 import { Observable, filter, map, startWith } from 'rxjs';
 import { AuthService } from '../../../core/services/auth.service';
 import { Usuario } from '../../../core/models/usuario.model';
+import { RolUsuario } from '../../../core/enums/estado-solicitud.enum';
 
 interface EnlaceNavbar {
   etiqueta: string;
@@ -12,9 +13,15 @@ interface EnlaceNavbar {
 }
 
 // El navbar lleva apartados del portal, no acciones.
-const ENLACES: EnlaceNavbar[] = [
+const ENLACES_ADMIN: EnlaceNavbar[] = [
   { etiqueta: 'Inicio', ruta: '/admin', activoSi: (url) => url === '/admin' },
   { etiqueta: 'Permisos y patentes', ruta: '/admin/solicitudes', activoSi: (url) => url.startsWith('/admin/') },
+];
+
+const ENLACES_CIUDADANO: EnlaceNavbar[] = [
+  { etiqueta: 'Inicio', ruta: '/ciudadano', activoSi: (url) => url === '/ciudadano' },
+  { etiqueta: 'Mis trámites', ruta: '/ciudadano/solicitudes', activoSi: (url) => url.startsWith('/ciudadano/solicitudes') },
+  { etiqueta: 'Permisos disponibles', ruta: '/ciudadano/permisos', activoSi: (url) => url.startsWith('/ciudadano/permisos') },
 ];
 
 @Component({
@@ -23,7 +30,6 @@ const ENLACES: EnlaceNavbar[] = [
   styleUrls: ['./navbar.component.css'],
 })
 export class NavbarComponent {
-  readonly enlaces = ENLACES;
   menuAbierto = false;
 
   readonly usuario$: Observable<Usuario | null>;
@@ -44,6 +50,14 @@ export class NavbarComponent {
 
   esActivo(enlace: EnlaceNavbar, url: string | null): boolean {
     return !!enlace.activoSi && enlace.activoSi(url ?? '');
+  }
+
+  enlacesPara(usuario: Usuario | null): EnlaceNavbar[] {
+    return usuario?.rol === RolUsuario.CIUDADANO ? ENLACES_CIUDADANO : ENLACES_ADMIN;
+  }
+
+  inicioPara(usuario: Usuario | null): string {
+    return usuario?.rol === RolUsuario.CIUDADANO ? '/ciudadano' : '/admin';
   }
 
   iniciales(usuario: Usuario): string {

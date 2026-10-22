@@ -12,7 +12,7 @@ export class RegisterComponent {
   cargando = false;
   error = '';
 
-  form = this.fb.group({
+  form = this.fb.nonNullable.group({
     nombre: ['', [Validators.required, Validators.minLength(3)]],
     documento: ['', [Validators.required]],          // CI / RUT
     email: ['', [Validators.required, Validators.email]],
@@ -37,11 +37,14 @@ export class RegisterComponent {
     this.cargando = true;
     this.error = '';
 
-    const { confirmPassword, ...datos } = this.form.value;
-    this.auth.register(datos as any).subscribe({
-      next: () => this.router.navigate(['/auth/login']),
+    const { nombre, documento, email, telefono, password } = this.form.getRawValue();
+    this.auth.register({ nombre, rut: documento, email, telefono, password }).subscribe({
+      next: () => {
+        this.cargando = false;
+        this.router.navigate(['/auth/login']);
+      },
       error: (e) => {
-        this.error = e?.error?.message || 'No se pudo completar el registro';
+        this.error = e?.error?.message || e?.message || 'No se pudo completar el registro';
         this.cargando = false;
       }
     });

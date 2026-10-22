@@ -35,7 +35,7 @@ export class LoginComponent {
     this.auth.login(this.form.getRawValue()).subscribe({
       next: (sesion) => {
         this.cargando = false;
-        this.router.navigateByUrl('/admin');
+        this.router.navigateByUrl(sesion.usuario.rol === RolUsuario.ADMINISTRADOR ? '/admin' : '/ciudadano');
       },
       error: () => {
         this.cargando = false;

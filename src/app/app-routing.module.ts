@@ -27,6 +27,15 @@ const routes: Routes = [
       import('./features/admin/admin.module').then((m) => m.AdminModule)
   },
   {
+    path: 'ciudadano',
+    canActivate: [AuthGuard, RoleGuard],
+    data: {
+      rolesPermitidos: [RolUsuario.CIUDADANO]
+    },
+    loadChildren: () =>
+      import('./features/ciudadano/ciudadano.module').then((m) => m.CiudadanoModule)
+  },
+  {
     path: '**',
     pathMatch: 'full',
     canActivate: [homeRedirectGuard],

@@ -5,6 +5,8 @@ export interface Usuario {
   nombre: string;
   email: string;
   rut?: string;
+  telefono?: string;
+  direccion?: string;
   rol: RolUsuario;
 }
 
@@ -19,6 +21,12 @@ export interface RegistroDto {
   rut: string;
   telefono?: string;
   password: string;
+}
+
+export interface ActualizarPerfilDto {
+  nombre: string;
+  telefono?: string;
+  direccion?: string;
 }
 
 export interface SesionDto {

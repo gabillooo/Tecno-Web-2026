@@ -7,6 +7,7 @@ import { EditarTipoPermisoComponent } from './pages/editar-tipo-permiso/editar-t
 import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component';
 import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import { PerfilAdminComponent } from './pages/perfil/perfil-admin.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,7 @@ const routes: Routes = [
     component: AdminLayoutComponent,
     children: [
       { path: '', pathMatch: 'full', component: HomeAdminComponent },
+      { path: 'perfil', component: PerfilAdminComponent },
       { path: 'solicitudes', component: SolicitudesComponent },
       { path: 'catalogo/nuevo', component: NuevoTipoPermisoComponent },
       { path: 'catalogo/:id/editar', component: EditarTipoPermisoComponent },

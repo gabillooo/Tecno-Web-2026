@@ -37,6 +37,11 @@
       <div class="menu" *ngIf="menuAbierto">
         <p class="menu__nombre">{{ usuario.nombre }}</p>
         <p class="menu__correo">{{ usuario.email }}</p>
+        <a
+          class="menu__perfil"
+          [routerLink]="rutaPerfil(usuario)"
+          (click)="menuAbierto = false"
+        >Modificar perfil</a>
         <button type="button" class="menu__salir" (click)="cerrarSesion()">Cerrar sesión</button>
       </div>
     </div>

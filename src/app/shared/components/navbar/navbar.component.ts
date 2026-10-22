@@ -60,6 +60,12 @@ export class NavbarComponent {
     return usuario?.rol === RolUsuario.CIUDADANO ? '/ciudadano' : '/admin';
   }
 
+  rutaPerfil(usuario: Usuario): string {
+    return usuario.rol === RolUsuario.CIUDADANO
+      ? '/ciudadano/perfil'
+      : '/admin/perfil';
+  }
+
   iniciales(usuario: Usuario): string {
     return usuario.nombre
       .split(' ')

@@ -10,6 +10,7 @@ import { EditarTipoPermisoComponent } from './pages/editar-tipo-permiso/editar-t
 import { SolicitudesComponent } from './pages/solicitudes/solicitudes.component';
 import { EstadisticasComponent } from './pages/estadisticas/estadisticas.component';
 import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
+import { PerfilAdminComponent } from './pages/perfil/perfil-admin.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { HomeAdminComponent } from './pages/home-admin/home-admin.component';
     SolicitudesComponent,
     EstadisticasComponent,
     HomeAdminComponent,
+    PerfilAdminComponent,
   ],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, AdminRoutingModule],
 })

@@ -1,0 +1,39 @@
+<section class="perfil" *ngIf="usuario">
+  <h1>Perfil de administrador</h1>
+
+  <div class="perfil__tarjeta tarjeta">
+    <div class="tarjeta__cuerpo">
+      <div class="perfil__encabezado">
+        <div class="perfil__avatar">{{ iniciales() }}</div>
+        <div>
+          <h2>{{ usuario.nombre }}</h2>
+          <span class="insignia">Administrador</span>
+        </div>
+      </div>
+
+      <div class="alerta alerta--ok" *ngIf="mensajeExito">{{ mensajeExito }}</div>
+
+      <div *ngIf="!editando" class="perfil__datos">
+        <div class="perfil__fila"><span>Correo electrónico</span><strong>{{ usuario.email }}</strong></div>
+        <div class="perfil__fila"><span>Teléfono</span><strong>{{ usuario.telefono || 'Sin indicar' }}</strong></div>
+        <div class="perfil__fila"><span>Dirección</span><strong>{{ usuario.direccion || 'Sin indicar' }}</strong></div>
+        <div class="perfil__acciones"><button type="button" class="boton" (click)="editar()">Editar perfil</button></div>
+      </div>
+
+      <form *ngIf="editando" [formGroup]="form" (ngSubmit)="guardar()">
+        <div class="campo-grupo">
+          <label class="etiqueta" for="nombre">Nombre completo</label>
+          <input id="nombre" class="campo" type="text" formControlName="nombre" />
+          <p class="campo-error" *ngIf="form.controls.nombre.touched && form.controls.nombre.invalid">Ingresa un nombre de al menos 3 caracteres.</p>
+        </div>
+        <div class="campo-grupo"><label class="etiqueta" for="telefono">Teléfono</label><input id="telefono" class="campo" type="tel" formControlName="telefono" /></div>
+        <div class="campo-grupo"><label class="etiqueta" for="direccion">Dirección</label><input id="direccion" class="campo" type="text" formControlName="direccion" /></div>
+        <div class="alerta alerta--error" *ngIf="error">{{ error }}</div>
+        <div class="perfil__acciones">
+          <button type="button" class="boton boton--contorno" (click)="cancelar()">Cancelar</button>
+          <button type="submit" class="boton" [disabled]="guardando">{{ guardando ? 'Guardando...' : 'Guardar cambios' }}</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>

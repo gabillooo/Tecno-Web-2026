@@ -25,6 +25,7 @@ export class AdminLayoutComponent {
   }
 
   private esSubpagina(url: string): boolean {
-    return url.split('?')[0].split('#')[0] !== '/admin';
+    const ruta = url.split('?')[0].split('#')[0];
+    return ruta !== '/admin' && ruta !== '/admin/perfil';
   }
 }

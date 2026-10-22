@@ -1,10 +1,17 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, delay, of, tap, throwError } from 'rxjs';
-import {LoginDto,RegistroDto,SesionDto,Usuario,} from '../models/usuario.model';
+import {
+  ActualizarPerfilDto,
+  LoginDto,
+  RegistroDto,
+  SesionDto,
+  Usuario,
+} from '../models/usuario.model';
 import { RolUsuario } from '../enums/estado-solicitud.enum';
 
 const STORAGE_KEY = 'permisos_sesion';
 const USUARIOS_KEY = 'permisos_usuarios';
+const ADMIN_PROFILE_KEY = 'permisos_admin_perfil';
 const ADMIN_EMAIL = 'admin@municipal.cl';
 
 interface UsuarioRegistrado extends Usuario {
@@ -26,12 +33,7 @@ export class AuthService {
     if (email === ADMIN_EMAIL && dto.password === '1234') {
       sesion = {
         token: 'demo-token-2026',
-        usuario: {
-          id: 'u-admin',
-          nombre: 'Admin',
-          email: dto.email,
-          rol: RolUsuario.ADMINISTRADOR,
-        },
+        usuario: this.leerPerfilAdmin(),
       };
     } else {
       const encontrado = this.leerUsuarios().find(
@@ -72,6 +74,7 @@ export class AuthService {
       nombre: dto.nombre.trim(),
       email,
       rut,
+      telefono: dto.telefono?.trim(),
       rol: RolUsuario.CIUDADANO, // el rol se fija aquí, no viene del formulario
       password: dto.password,
     };
@@ -85,6 +88,39 @@ export class AuthService {
 
   perfil(): Promise<Usuario | null> {
     return Promise.resolve(this.usuarioActual);
+  }
+
+  actualizarPerfil(dto: ActualizarPerfilDto): Observable<Usuario> {
+    const actual = this.usuarioActual;
+
+    if (!actual) {
+      return throwError(() => new Error('No hay una sesión activa'));
+    }
+
+    const usuario: Usuario = {
+      ...actual,
+      nombre: dto.nombre.trim(),
+      telefono: dto.telefono?.trim() || undefined,
+      direccion: dto.direccion?.trim() || undefined,
+    };
+
+    if (usuario.rol === RolUsuario.ADMINISTRADOR) {
+      localStorage.setItem(ADMIN_PROFILE_KEY, JSON.stringify(usuario));
+    } else {
+      const usuarios = this.leerUsuarios().map((item) =>
+        item.id === usuario.id ? { ...item, ...usuario } : item
+      );
+      localStorage.setItem(USUARIOS_KEY, JSON.stringify(usuarios));
+    }
+
+    const sesion = this.leer();
+    if (sesion) {
+      this.guardar({ ...sesion, usuario });
+    } else {
+      this.usuarioSubject.next(usuario);
+    }
+
+    return of(usuario).pipe(delay(300));
   }
 
   logout(): void {
@@ -125,5 +161,25 @@ export class AuthService {
     } catch {
       return [];
     }
+  }
+
+  private leerPerfilAdmin(): Usuario {
+    try {
+      const raw = localStorage.getItem(ADMIN_PROFILE_KEY);
+      if (raw) {
+        return JSON.parse(raw) as Usuario;
+      }
+    } catch {
+      // Se usa el perfil inicial si el almacenamiento local no es válido.
+    }
+
+    return {
+      id: 'u-admin',
+      nombre: 'Administrador municipal',
+      email: ADMIN_EMAIL,
+      telefono: '',
+      direccion: '',
+      rol: RolUsuario.ADMINISTRADOR,
+    };
   }
 }

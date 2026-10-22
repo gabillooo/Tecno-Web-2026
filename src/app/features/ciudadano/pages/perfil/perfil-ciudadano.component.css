@@ -1,0 +1,11 @@
+.perfil { max-width: 760px; margin: 0 auto; }
+.perfil__tarjeta { border-top: 5px solid var(--rojo); }
+.perfil__encabezado { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
+.perfil__encabezado h2 { margin: 0 0 8px; padding: 0; border: 0; color: var(--navy); font-size: 1.25rem; }
+.perfil__avatar { display: grid; width: 56px; height: 56px; place-items: center; border-radius: 50%; background: var(--navy); color: var(--blanco); font-weight: 700; }
+.perfil__datos { border-top: 1px solid var(--borde); }
+.perfil__fila { display: grid; grid-template-columns: 180px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--borde); }
+.perfil__fila span { color: var(--tx2); font-size: .9rem; }
+.perfil__fila strong { font-weight: 600; overflow-wrap: anywhere; }
+.perfil__acciones { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; }
+@media (max-width: 640px) { .perfil__fila { grid-template-columns: 1fr; gap: 4px; } .perfil__acciones { flex-direction: column-reverse; } .perfil__acciones .boton { width: 100%; } }

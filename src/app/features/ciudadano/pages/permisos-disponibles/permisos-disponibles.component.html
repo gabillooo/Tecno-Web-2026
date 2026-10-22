@@ -1,0 +1,32 @@
+<h1>Permisos disponibles</h1>
+
+<ng-container *ngIf="tiposPermiso$ | async as tipos">
+  <div class="tabla-contenedor" *ngIf="tipos.length; else sinTipos">
+    <table class="admin-tabla">
+      <thead>
+        <tr>
+          <th scope="col">Nombre</th>
+          <th scope="col">Tarifa</th>
+          <th scope="col">Plazo</th>
+          <th scope="col">Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tipo of tipos">
+          <td>{{ tipo.nombre }}</td>
+          <td>{{ tipo.tarifa | currency:'CLP' }}</td>
+          <td>{{ tipo.plazoEstimadoDias }} días</td>
+          <td>
+            <div class="acciones">
+              <button type="button" class="boton boton--pequeno">Solicitar trámite</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #sinTipos>
+    <p class="aviso">No hay permisos activos disponibles en este momento.</p>
+  </ng-template>
+</ng-container>

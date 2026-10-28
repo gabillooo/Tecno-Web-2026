@@ -1,0 +1,49 @@
+<div class="fila fila--separada cabecera">
+  <h1>Solicitar trámite</h1>
+  <a class="boton boton--contorno" routerLink="/ciudadano/permisos">Volver al catálogo</a>
+</div>
+
+<section class="tarjeta formulario" *ngIf="!creada; else confirmacion">
+  <form class="tarjeta__cuerpo" [formGroup]="form" (ngSubmit)="enviar()">
+    <h2>Datos de la solicitud</h2>
+    <div class="campo-grupo">
+      <label class="etiqueta" for="solicitante">Nombre del solicitante</label>
+      <input id="solicitante" class="campo" type="text" [value]="auth.usuarioActual?.nombre ?? ''" readonly />
+    </div>
+    <p class="aviso" *ngIf="avisoPermiso">{{ avisoPermiso }}</p>
+    <div class="campo-grupo">
+      <label class="etiqueta" for="tipoPermisoId">Tipo de permiso</label>
+      <select id="tipoPermisoId" class="campo" formControlName="tipoPermisoId"
+        [class.campo--error]="form.controls.tipoPermisoId.touched && form.controls.tipoPermisoId.invalid">
+        <option value="">Selecciona un permiso</option>
+        <option *ngFor="let tipo of tipos" [value]="tipo.id">{{ tipo.nombre }}</option>
+      </select>
+      <p class="campo-error" *ngIf="form.controls.tipoPermisoId.touched && form.controls.tipoPermisoId.invalid">Selecciona un permiso activo.</p>
+      <p class="aviso" *ngIf="!tipos.length">No hay permisos activos disponibles en este momento.</p>
+    </div>
+    <div class="campo-grupo">
+      <label class="etiqueta" for="motivo">Motivo de la solicitud</label>
+      <textarea id="motivo" class="campo" rows="3" formControlName="motivo"
+        [class.campo--error]="form.controls.motivo.touched && form.controls.motivo.invalid"></textarea>
+      <p class="campo-error" *ngIf="form.controls.motivo.touched && form.controls.motivo.invalid">Ingresa el motivo de la solicitud.</p>
+    </div>
+    <p class="aviso">La documentación de respaldo quedará pendiente. Esta pantalla todavía no permite adjuntar archivos.</p>
+    <div class="alerta alerta--error" role="alert" *ngIf="error">{{ error }}</div>
+    <div class="pie-formulario">
+      <a class="boton boton--contorno" routerLink="/ciudadano/permisos">Cancelar</a>
+      <button class="boton" type="submit" [disabled]="guardando || !tipos.length || !auth.usuarioActual" [class.boton--cargando]="guardando">
+        <span class="girador" *ngIf="guardando" aria-hidden="true"></span>
+        {{ guardando ? 'Enviando...' : 'Enviar solicitud' }}
+      </button>
+    </div>
+  </form>
+</section>
+
+<ng-template #confirmacion>
+  <section class="tarjeta formulario">
+    <div class="tarjeta__cuerpo">
+      <div class="alerta alerta--ok" role="status">La solicitud {{ creada?.folio }} fue registrada correctamente con estado Recibido.</div>
+      <a class="boton" routerLink="/ciudadano/solicitudes">Ver mis trámites</a>
+    </div>
+  </section>
+</ng-template>

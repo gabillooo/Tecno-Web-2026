@@ -17,7 +17,12 @@
         <tr *ngFor="let s of solicitudes">
           <td>{{ s.folio }}</td>
           <td>{{ s.solicitanteNombre || s.solicitanteId }}</td>
-          <td>{{ s.tipoPermisoNombre }}</td>
+          <td>{{ s.tipoPermisoNombre }}
+            <details *ngIf="s.datosFormulario['motivo']">
+              <summary>Ver motivo</summary>
+              <p>{{ s.datosFormulario['motivo'] }}</p>
+            </details>
+          </td>
           <td>
             <span class="pill" [ngClass]="clasePill(s.estado)">{{ etiqueta(s.estado) }}</span>
           </td>

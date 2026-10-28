@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, take, switchMap, throwError } from 'rxjs';
 import {
   AvanzarPasoDto,
   ComprobantePago,
@@ -9,6 +9,7 @@ import {
 } from '../models/solicitud.model';
 import { EstadoSolicitud } from '../enums/estado-solicitud.enum';
 import { AuthService } from './auth.service';
+import { PermisosService } from './permisos.service';
 
 @Injectable({ providedIn: 'root' })
 export class SolicitudesService {
@@ -176,32 +177,47 @@ export class SolicitudesService {
     }
   ]);
 
-  constructor(private readonly auth: AuthService) {}
+  constructor(
+    private readonly auth: AuthService,
+    private readonly permisos: PermisosService
+  ) {}
 
-  iniciarSolicitud(tipoPermisoId: string): Observable<Solicitud> {
-    const nombres: Record<string, string> = {
-      patente: 'Patente comercial',
-      evento: 'Autorización de eventos',
-      via: 'Ocupación de vía pública'
-    };
+  // El segundo argumento es opcional para conservar las llamadas del flujo por pasos.
+  iniciarSolicitud(
+    tipoPermisoId: string,
+    datosFormulario: Record<string, unknown> = {}
+  ): Observable<Solicitud> {
+    const usuario = this.auth.usuarioActual;
+    if (!usuario) {
+      return throwError(() => new Error('Debes iniciar sesión para solicitar un trámite.'));
+    }
 
-    const s: Solicitud = {
-      id: crypto.randomUUID(),
-      folio: `SOL-2026-${String(this.siguienteFolio()).padStart(6, '0')}`,
-      tipoPermisoId,
-      tipoPermisoNombre: nombres[tipoPermisoId] ?? 'Permiso municipal',
-      solicitanteId: this.auth.usuarioActual?.id ?? 'u-sin-sesion',
-      solicitanteNombre: this.auth.usuarioActual?.nombre ?? 'Ciudadano',
-      estado: EstadoSolicitud.RECIBIDO,
-      datosFormulario: {},
-      documentos: [],
-      observaciones: [],
-      fechaCreacion: new Date().toISOString(),
-      fechaActualizacion: new Date().toISOString()
-    };
-
-    this.datos.next([...this.datos.value, s]);
-    return of(s);
+    return this.permisos.listar(true).pipe(
+      take(1),
+      switchMap((tipos) => {
+        const tipo = tipos.find((item) => item.id === tipoPermisoId);
+        if (!tipo) {
+          return throwError(() => new Error('Selecciona un permiso activo del catálogo.'));
+        }
+        const fecha = new Date();
+        const solicitud: Solicitud = {
+          id: crypto.randomUUID(),
+          folio: `SOL-${fecha.getFullYear()}-${String(this.siguienteFolio()).padStart(6, '0')}`,
+          tipoPermisoId: tipo.id,
+          tipoPermisoNombre: tipo.nombre,
+          solicitanteId: usuario.id,
+          solicitanteNombre: usuario.nombre,
+          estado: EstadoSolicitud.RECIBIDO,
+          datosFormulario: { ...datosFormulario },
+          documentos: [],
+          observaciones: [],
+          fechaCreacion: fecha.toISOString(),
+          fechaActualizacion: fecha.toISOString()
+        };
+        this.datos.next([...this.datos.value, solicitud]);
+        return of(solicitud);
+      })
+    );
   }
 
   avanzarPaso(d: AvanzarPasoDto): Observable<Solicitud> {

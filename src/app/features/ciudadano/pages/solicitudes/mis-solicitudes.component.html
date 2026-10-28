@@ -45,6 +45,8 @@
         <dl>
           <div><dt>Folio</dt><dd>{{ solicitud.folio }}</dd></div>
           <div><dt>Dirección</dt><dd>{{ direccion(solicitud) }}</dd></div>
+          <div><dt>Fecha de solicitud</dt><dd>{{ solicitud.fechaCreacion | date:'dd/MM/yyyy':'UTC' }}</dd></div>
+          <div *ngIf="solicitud.datosFormulario['motivo']"><dt>Motivo</dt><dd>{{ solicitud.datosFormulario['motivo'] }}</dd></div>
           <div><dt>Actualización</dt><dd>{{ solicitud.fechaActualizacion | date:'dd/MM/yyyy':'UTC' }}</dd></div>
         </dl>
       </article>

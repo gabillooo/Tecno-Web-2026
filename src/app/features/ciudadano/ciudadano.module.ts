@@ -1,3 +1,4 @@
+import { SolicitarTramiteComponent } from './pages/solicitar-tramite/solicitar-tramite.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
@@ -10,13 +11,15 @@ import { MisSolicitudesComponent } from './pages/solicitudes/mis-solicitudes.com
 
 const routes: Routes = [
   { path: 'solicitudes', component: MisSolicitudesComponent },
+  { path: 'nueva-solicitud', component: SolicitarTramiteComponent },
+  { path: 'permisos/:permisoId/solicitar', component: SolicitarTramiteComponent },
   { path: 'permisos', component: PermisosDisponiblesComponent },
   { path: 'perfil', component: PerfilCiudadanoComponent },
   { path: '', pathMatch: 'full', component: HomeCiudadanoComponent },
 ];
 
 @NgModule({
-  declarations: [HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent, MisSolicitudesComponent],
+  declarations: [SolicitarTramiteComponent, HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent, MisSolicitudesComponent],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class CiudadanoModule {}

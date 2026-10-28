@@ -1,0 +1,12 @@
+/* Misma distribución que el formulario existente de nuevo tipo de permiso. */
+.cabecera { margin-bottom: 20px; }
+.cabecera h1 { margin: 0; }
+.formulario { max-width: 860px; }
+.formulario h2 { margin-bottom: 16px; }
+.pie-formulario {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: flex-end;
+  margin-top: 28px;
+}

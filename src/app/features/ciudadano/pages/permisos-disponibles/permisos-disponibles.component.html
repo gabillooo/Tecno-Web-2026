@@ -18,7 +18,7 @@
           <td>{{ tipo.plazoEstimadoDias }} días</td>
           <td>
             <div class="acciones">
-              <button type="button" class="boton boton--pequeno">Solicitar trámite</button>
+              <button type="button" class="boton boton--pequeno" [routerLink]="['/ciudadano/permisos', tipo.id, 'solicitar']">Solicitar trámite</button>
             </div>
           </td>
         </tr>

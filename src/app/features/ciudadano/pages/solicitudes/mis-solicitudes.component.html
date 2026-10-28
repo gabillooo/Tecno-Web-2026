@@ -1,0 +1,54 @@
+<section class="mis-tramites">
+  <header class="mis-tramites__encabezado">
+    <div>
+      <p class="mis-tramites__sobrelinea">PORTAL CIUDADANO</p>
+      <h1>Mis trámites</h1>
+      <p class="texto-suave">Consulta tus patentes emitidas y el estado de tus solicitudes.</p>
+    </div>
+    <div class="mis-tramites__perfil" *ngIf="usuario">
+      <strong>{{ usuario.nombre }}</strong>
+      <span>{{ usuario.email }}</span>
+      <span *ngIf="usuario.rut">RUT: {{ usuario.rut }}</span>
+    </div>
+  </header>
+
+  <section class="mis-tramites__seccion" aria-labelledby="patentes-emitidas">
+    <h2 id="patentes-emitidas">Patentes emitidas</h2>
+    <p class="texto-suave">Patentes comerciales finalizadas y asociadas a tu cuenta.</p>
+    <div class="mis-tramites__grilla" *ngIf="patentesEmitidas$ | async as patentes">
+      <article class="mis-tramites__tarjeta mis-tramites__tarjeta--emitida" *ngFor="let patente of patentes">
+        <div class="mis-tramites__titulo">
+          <h3>{{ nombreComercial(patente) }}</h3>
+          <span class="pill pill--verde">Emitida</span>
+        </div>
+        <p>{{ patente.tipoPermisoNombre }}</p>
+        <dl>
+          <div><dt>Folio</dt><dd>{{ patente.folio }}</dd></div>
+          <div><dt>Dirección</dt><dd>{{ direccion(patente) }}</dd></div>
+          <div><dt>Fecha de emisión</dt><dd>{{ (patente.fechaEmision || patente.fechaActualizacion) | date:'dd/MM/yyyy':'UTC' }}</dd></div>
+        </dl>
+      </article>
+      <p class="aviso" *ngIf="patentes.length === 0">Aún no tienes patentes emitidas.</p>
+    </div>
+  </section>
+
+  <section class="mis-tramites__seccion" aria-labelledby="solicitudes-seguimiento">
+    <h2 id="solicitudes-seguimiento">Solicitudes en seguimiento</h2>
+    <p class="texto-suave">Solicitudes ingresadas desde tu cuenta que todavía no figuran como patente emitida.</p>
+    <div class="mis-tramites__grilla" *ngIf="solicitudesEnSeguimiento$ | async as solicitudes">
+      <article class="mis-tramites__tarjeta" *ngFor="let solicitud of solicitudes">
+        <div class="mis-tramites__titulo">
+          <h3>{{ nombreComercial(solicitud) }}</h3>
+          <span class="pill" [ngClass]="clasePill(solicitud.estado)">{{ etiqueta(solicitud.estado) }}</span>
+        </div>
+        <p>{{ solicitud.tipoPermisoNombre }}</p>
+        <dl>
+          <div><dt>Folio</dt><dd>{{ solicitud.folio }}</dd></div>
+          <div><dt>Dirección</dt><dd>{{ direccion(solicitud) }}</dd></div>
+          <div><dt>Actualización</dt><dd>{{ solicitud.fechaActualizacion | date:'dd/MM/yyyy':'UTC' }}</dd></div>
+        </dl>
+      </article>
+      <p class="aviso" *ngIf="solicitudes.length === 0">No tienes otros trámites para seguimiento.</p>
+    </div>
+  </section>
+</section>

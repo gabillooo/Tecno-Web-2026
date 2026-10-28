@@ -1,0 +1,52 @@
+<section class="ciudadano-intro">
+  <div>
+    <p class="eyebrow">PORTAL CIUDADANO</p>
+    <h1>Mis patentes</h1>
+    <p class="muted">Consulta las patentes comerciales emitidas y las solicitudes asociadas a tu cuenta.</p>
+  </div>
+  <div class="perfil-ciudadano" *ngIf="usuario">
+    <strong>{{ usuario.nombre }}</strong>
+    <span>{{ usuario.email }}</span>
+    <span *ngIf="usuario.rut">RUT: {{ usuario.rut }}</span>
+  </div>
+</section>
+
+<section class="patentes-seccion">
+  <h2>Patentes emitidas</h2>
+  <p class="muted">Patentes aprobadas y emitidas a tu nombre.</p>
+  <div class="patentes-grid" *ngIf="patentesEmitidas$ | async as patentes">
+    <article class="patente-card emitida" *ngFor="let patente of patentes">
+      <div class="card-heading">
+        <h3>{{ nombreComercial(patente) }}</h3>
+        <span class="estado">Emitida</span>
+      </div>
+      <p>{{ patente.tipoPermisoNombre }}</p>
+      <dl>
+        <div><dt>Folio</dt><dd>{{ patente.folio }}</dd></div>
+        <div><dt>Dirección</dt><dd>{{ direccion(patente) }}</dd></div>
+        <div><dt>Fecha de emisión</dt><dd>{{ (patente.fechaEmision || patente.fechaActualizacion) | date:'dd/MM/yyyy':'UTC' }}</dd></div>
+      </dl>
+    </article>
+    <p class="notice" *ngIf="patentes.length === 0">Todavía no tienes patentes emitidas.</p>
+  </div>
+</section>
+
+<section class="patentes-seccion">
+  <h2>Solicitudes de patentes</h2>
+  <p class="muted">Seguimiento de solicitudes presentadas desde esta cuenta.</p>
+  <div class="patentes-grid" *ngIf="solicitudesPatentes$ | async as solicitudes">
+    <article class="patente-card" *ngFor="let solicitud of solicitudes">
+      <div class="card-heading">
+        <h3>{{ nombreComercial(solicitud) }}</h3>
+        <span class="estado">{{ estadoLabel(solicitud) }}</span>
+      </div>
+      <p>{{ solicitud.tipoPermisoNombre }}</p>
+      <dl>
+        <div><dt>Folio</dt><dd>{{ solicitud.folio }}</dd></div>
+        <div><dt>Dirección</dt><dd>{{ direccion(solicitud) }}</dd></div>
+        <div><dt>Última actualización</dt><dd>{{ solicitud.fechaActualizacion | date:'dd/MM/yyyy':'UTC' }}</dd></div>
+      </dl>
+    </article>
+    <p class="notice" *ngIf="solicitudes.length === 0">No tienes otras solicitudes de patentes.</p>
+  </div>
+</section>

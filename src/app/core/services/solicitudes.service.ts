@@ -8,6 +8,7 @@ import {
   Solicitud
 } from '../models/solicitud.model';
 import { EstadoSolicitud } from '../enums/estado-solicitud.enum';
+import { AuthService } from './auth.service';
 
 @Injectable({ providedIn: 'root' })
 export class SolicitudesService {
@@ -17,7 +18,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000123',
       tipoPermisoId: 'patente',
       tipoPermisoNombre: 'Patente comercial',
-      solicitanteId: 'María Fernanda Rojas',
+      solicitanteId: 'u-maria-rojas',
+      solicitanteNombre: 'María Fernanda Rojas',
       estado: EstadoSolicitud.EN_REVISION,
       datosFormulario: { direccion: 'Av. Siempre Viva 123' },
       documentos: [],
@@ -30,7 +32,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000124',
       tipoPermisoId: 'evento',
       tipoPermisoNombre: 'Autorización de eventos',
-      solicitanteId: 'Carlos Andrés Muñoz',
+      solicitanteId: 'u-carlos-munoz',
+      solicitanteNombre: 'Carlos Andrés Muñoz',
       estado: EstadoSolicitud.RESUELTO,
       datosFormulario: {
         direccion: 'Plaza Central s/n',
@@ -47,7 +50,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000125',
       tipoPermisoId: 'via',
       tipoPermisoNombre: 'Ocupación de vía pública',
-      solicitanteId: 'Javiera Ignacia Soto',
+      solicitanteId: 'u-javiera-soto',
+      solicitanteNombre: 'Javiera Ignacia Soto',
       estado: EstadoSolicitud.RECHAZADO,
       datosFormulario: {
         direccion: 'Calle Los Robles 456',
@@ -72,7 +76,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000126',
       tipoPermisoId: 'patente',
       tipoPermisoNombre: 'Patente comercial',
-      solicitanteId: 'Rodrigo Esteban Vargas',
+      solicitanteId: 'u-rodrigo-vargas',
+      solicitanteNombre: 'Rodrigo Esteban Vargas',
       estado: EstadoSolicitud.CERRADO,
       datosFormulario: { direccion: 'Av. Providencia 2200' },
       documentos: [],
@@ -85,7 +90,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000127',
       tipoPermisoId: 'evento',
       tipoPermisoNombre: 'Autorización de eventos',
-      solicitanteId: 'Antonia Belén Herrera',
+      solicitanteId: 'u-antonia-herrera',
+      solicitanteNombre: 'Antonia Belén Herrera',
       estado: EstadoSolicitud.EN_PROCESO,
       datosFormulario: {
         direccion: 'Parque Municipal',
@@ -110,7 +116,8 @@ export class SolicitudesService {
       folio: 'SOL-2026-000128',
       tipoPermisoId: 'via',
       tipoPermisoNombre: 'Ocupación de vía pública',
-      solicitanteId: 'Diego Alonso Fuentes',
+      solicitanteId: 'u-diego-fuentes',
+      solicitanteNombre: 'Diego Alonso Fuentes',
       estado: EstadoSolicitud.RECIBIDO,
       datosFormulario: {},
       documentos: [],
@@ -123,15 +130,53 @@ export class SolicitudesService {
       folio: 'SOL-2026-000129',
       tipoPermisoId: 'patente',
       tipoPermisoNombre: 'Patente comercial',
-      solicitanteId: 'Camila Paz Contreras',
+      solicitanteId: 'u-camila-contreras',
+      solicitanteNombre: 'Camila Paz Contreras',
       estado: EstadoSolicitud.EN_REVISION,
       datosFormulario: { direccion: 'Camino La Vinilla 88' },
       documentos: [],
       observaciones: [],
       fechaCreacion: '2026-09-19',
       fechaActualizacion: '2026-09-20'
+    },
+    {
+      id: 'sol-8',
+      folio: 'SOL-2026-000130',
+      tipoPermisoId: 'patente',
+      tipoPermisoNombre: 'Patente comercial',
+      solicitanteId: 'u-ciudadano-01',
+      solicitanteNombre: 'Jerry Joaquin Quiroga Ortega',
+      estado: EstadoSolicitud.CERRADO,
+      datosFormulario: {
+        nombreComercial: 'Cafetería Raíces',
+        direccion: 'Av. Providencia 1200',
+      },
+      documentos: [],
+      observaciones: [],
+      fechaCreacion: '2026-07-02',
+      fechaActualizacion: '2026-07-18',
+      fechaEmision: '2026-07-18',
+    },
+    {
+      id: 'sol-9',
+      folio: 'SOL-2026-000131',
+      tipoPermisoId: 'patente',
+      tipoPermisoNombre: 'Patente comercial',
+      solicitanteId: 'u-ciudadano-01',
+      solicitanteNombre: 'Jerry Joaquin Quiroga Ortega',
+      estado: EstadoSolicitud.EN_REVISION,
+      datosFormulario: {
+        nombreComercial: 'Almacén La Esquina',
+        direccion: 'Calle Los Aromos 455',
+      },
+      documentos: [],
+      observaciones: [],
+      fechaCreacion: '2026-09-21',
+      fechaActualizacion: '2026-09-23',
     }
   ]);
+
+  constructor(private readonly auth: AuthService) {}
 
   iniciarSolicitud(tipoPermisoId: string): Observable<Solicitud> {
     const nombres: Record<string, string> = {
@@ -142,10 +187,11 @@ export class SolicitudesService {
 
     const s: Solicitud = {
       id: crypto.randomUUID(),
-      folio: `SOL-2026-${String(this.datos.value.length + 124).padStart(6, '0')}`,
+      folio: `SOL-2026-${String(this.siguienteFolio()).padStart(6, '0')}`,
       tipoPermisoId,
       tipoPermisoNombre: nombres[tipoPermisoId] ?? 'Permiso municipal',
-      solicitanteId: 'u-001',
+      solicitanteId: this.auth.usuarioActual?.id ?? 'u-sin-sesion',
+      solicitanteNombre: this.auth.usuarioActual?.nombre ?? 'Ciudadano',
       estado: EstadoSolicitud.RECIBIDO,
       datosFormulario: {},
       documentos: [],
@@ -199,9 +245,15 @@ export class SolicitudesService {
   }
 
   misSolicitudes(
-    _: FiltroSolicitudes | undefined = undefined
+    solicitanteId: string,
+    filtro: FiltroSolicitudes = {}
   ): Observable<Solicitud[]> {
-    return this.datos.asObservable();
+    return this.datos.pipe(
+      map((solicitudes) => this.filtrar(
+        solicitudes.filter((solicitud) => solicitud.solicitanteId === solicitanteId),
+        filtro
+      ))
+    );
   }
 
   listarTodas(
@@ -259,5 +311,24 @@ export class SolicitudesService {
     const n = fn(this.datos.value.find((s) => s.id === id)!);
     this.datos.next(this.datos.value.map((s) => (s.id === id ? n : s)));
     return of(n);
+  }
+
+  private siguienteFolio(): number {
+    return this.datos.value.reduce((maximo, solicitud) => {
+      const numero = Number(solicitud.folio.slice(-6));
+      return Number.isFinite(numero) ? Math.max(maximo, numero) : maximo;
+    }, 0) + 1;
+  }
+
+  private filtrar(solicitudes: Solicitud[], filtro: FiltroSolicitudes): Solicitud[] {
+    const texto = filtro.texto?.trim().toLocaleLowerCase();
+    return solicitudes.filter((solicitud) =>
+      (!filtro.estado || solicitud.estado === filtro.estado) &&
+      (!filtro.tipoPermisoId || solicitud.tipoPermisoId === filtro.tipoPermisoId) &&
+      (!texto || `${solicitud.folio} ${solicitud.tipoPermisoNombre} ${solicitud.solicitanteNombre ?? ''}`
+        .toLocaleLowerCase().includes(texto)) &&
+      (!filtro.desde || solicitud.fechaCreacion >= filtro.desde) &&
+      (!filtro.hasta || solicitud.fechaCreacion <= filtro.hasta)
+    );
   }
 }

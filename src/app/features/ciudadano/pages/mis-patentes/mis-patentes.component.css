@@ -1,0 +1,107 @@
+.ciudadano-intro {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 34px;
+}
+
+.eyebrow {
+  margin-bottom: 8px;
+  color: #1b7083;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.perfil-ciudadano {
+  display: grid;
+  gap: 4px;
+  min-width: 230px;
+  padding: 16px 20px;
+  background: #e7f6f8;
+  border-left: 5px solid #00bde3;
+}
+
+.perfil-ciudadano span {
+  color: #555;
+}
+
+.patentes-seccion {
+  margin-top: 30px;
+}
+
+.patentes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.patente-card {
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #78b8c8;
+  border-top: 5px solid #d18b22;
+}
+
+.patente-card.emitida {
+  border-top-color: #21835b;
+}
+
+.card-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-heading h3 {
+  margin: 0;
+  color: #133a61;
+}
+
+.estado {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  background: #f3efe3;
+  font-size: .8rem;
+  font-weight: 700;
+}
+
+.emitida .estado {
+  background: #e0f2e9;
+  color: #176441;
+}
+
+dl {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+}
+
+dl div {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 8px;
+}
+
+dt {
+  color: #555;
+  font-weight: 700;
+}
+
+dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 700px) {
+  .ciudadano-intro {
+    flex-direction: column;
+  }
+
+  .perfil-ciudadano {
+    width: 100%;
+  }
+}

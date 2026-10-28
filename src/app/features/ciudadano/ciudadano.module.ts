@@ -6,15 +6,17 @@ import { HomeCiudadanoComponent } from './pages/home-ciudadano/home-ciudadano.co
 import { PerfilCiudadanoComponent } from './pages/perfil/perfil-ciudadano.component';
 
 import { PermisosDisponiblesComponent } from './pages/permisos-disponibles/permisos-disponibles.component';
+import { MisSolicitudesComponent } from './pages/solicitudes/mis-solicitudes.component';
 
 const routes: Routes = [
+  { path: 'solicitudes', component: MisSolicitudesComponent },
   { path: 'permisos', component: PermisosDisponiblesComponent },
   { path: 'perfil', component: PerfilCiudadanoComponent },
   { path: '', pathMatch: 'full', component: HomeCiudadanoComponent },
 ];
 
 @NgModule({
-  declarations: [HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent],
+  declarations: [HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent, MisSolicitudesComponent],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class CiudadanoModule {}

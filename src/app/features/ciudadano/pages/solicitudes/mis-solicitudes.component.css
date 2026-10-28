@@ -1,0 +1,99 @@
+.mis-tramites__encabezado {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.mis-tramites__sobrelinea {
+  margin: 0 0 8px;
+  color: #1b7083;
+  font-size: .8rem;
+  font-weight: 700;
+  letter-spacing: .12em;
+}
+
+.mis-tramites__perfil {
+  display: grid;
+  gap: 4px;
+  min-width: 240px;
+  padding: 16px 20px;
+  background: #e7f6f8;
+  border-left: 5px solid #00bde3;
+}
+
+.mis-tramites__perfil span {
+  color: #555;
+}
+
+.mis-tramites__seccion {
+  margin-top: 30px;
+}
+
+.mis-tramites__grilla {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 16px;
+  margin-top: 16px;
+}
+
+.mis-tramites__tarjeta {
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #d7dee5;
+  border-top: 4px solid #e2a12d;
+  border-radius: 10px;
+}
+
+.mis-tramites__tarjeta--emitida {
+  border-top-color: #2f8a53;
+}
+
+.mis-tramites__titulo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mis-tramites__titulo h3 {
+  margin: 0;
+  color: #183e66;
+}
+
+.mis-tramites__titulo .pill {
+  flex: 0 0 auto;
+}
+
+.mis-tramites dl {
+  display: grid;
+  gap: 10px;
+  margin: 18px 0 0;
+}
+
+.mis-tramites dl div {
+  display: grid;
+  grid-template-columns: 130px minmax(0, 1fr);
+  gap: 8px;
+}
+
+.mis-tramites dt {
+  color: #56606b;
+  font-weight: 700;
+}
+
+.mis-tramites dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 650px) {
+  .mis-tramites__encabezado {
+    flex-direction: column;
+  }
+
+  .mis-tramites__perfil {
+    width: 100%;
+  }
+}

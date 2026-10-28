@@ -12,11 +12,21 @@ import { RolUsuario } from '../enums/estado-solicitud.enum';
 const STORAGE_KEY = 'permisos_sesion';
 const USUARIOS_KEY = 'permisos_usuarios';
 const ADMIN_PROFILE_KEY = 'permisos_admin_perfil';
+const DEMO_CIUDADANO_VERSION_KEY = 'permisos_demo_ciudadano_v1';
 const ADMIN_EMAIL = 'admin@municipal.cl';
 
 interface UsuarioRegistrado extends Usuario {
   password: string;
 }
+
+const DEMO_CIUDADANO: UsuarioRegistrado = {
+  id: 'u-ciudadano-01',
+  nombre: 'Jerry Joaquin Quiroga Ortega',
+  email: 'jerrykairox@gmail.com',
+  rut: '21.957.582-3',
+  rol: RolUsuario.CIUDADANO,
+  password: '1234',
+};
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -27,7 +37,7 @@ export class AuthService {
   readonly usuario$ = this.usuarioSubject.asObservable();
 
   login(dto: LoginDto): Observable<SesionDto> {
-    const email = dto.email.toLowerCase();
+    const email = dto.email.trim().toLowerCase();
     let sesion: SesionDto | null = null;
 
     if (email === ADMIN_EMAIL && dto.password === '1234') {
@@ -148,7 +158,21 @@ export class AuthService {
   private leer(): SesionDto | null {
     try {
       const raw = localStorage.getItem(STORAGE_KEY);
-      return raw ? (JSON.parse(raw) as SesionDto) : null;
+      const sesion = raw ? (JSON.parse(raw) as SesionDto) : null;
+      if (
+        sesion?.usuario?.id === DEMO_CIUDADANO.id ||
+        sesion?.usuario?.email === 'ciudadano@municipal.cl'
+      ) {
+        sesion.usuario = {
+          ...sesion.usuario,
+          nombre: DEMO_CIUDADANO.nombre,
+          email: DEMO_CIUDADANO.email,
+          rut: DEMO_CIUDADANO.rut,
+          rol: DEMO_CIUDADANO.rol,
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(sesion));
+      }
+      return sesion;
     } catch {
       return null;
     }
@@ -157,7 +181,25 @@ export class AuthService {
   private leerUsuarios(): UsuarioRegistrado[] {
     try {
       const raw = localStorage.getItem(USUARIOS_KEY);
-      return raw ? (JSON.parse(raw) as UsuarioRegistrado[]) : [];
+      const usuarios = raw ? (JSON.parse(raw) as UsuarioRegistrado[]) : [];
+
+      if (localStorage.getItem(DEMO_CIUDADANO_VERSION_KEY) !== '1') {
+        const indiceDemo = usuarios.findIndex(
+          (usuario) =>
+            usuario.id === DEMO_CIUDADANO.id ||
+            usuario.email === DEMO_CIUDADANO.email ||
+            usuario.email === 'ciudadano@municipal.cl'
+        );
+        if (indiceDemo === -1) {
+          usuarios.push({ ...DEMO_CIUDADANO });
+        } else {
+          usuarios[indiceDemo] = { ...usuarios[indiceDemo], ...DEMO_CIUDADANO };
+        }
+        localStorage.setItem(USUARIOS_KEY, JSON.stringify(usuarios));
+        localStorage.setItem(DEMO_CIUDADANO_VERSION_KEY, '1');
+      }
+
+      return usuarios;
     } catch {
       return [];
     }

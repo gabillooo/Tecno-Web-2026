@@ -30,6 +30,7 @@ export interface Solicitud {
   tipoPermisoId: string;
   tipoPermisoNombre: string;
   solicitanteId: string;
+  solicitanteNombre?: string;
   estado: EstadoSolicitud;
   datosFormulario: Record<string, unknown>; // respuestas del paso "Datos del trámite"
   documentos: DocumentoAdjunto[];

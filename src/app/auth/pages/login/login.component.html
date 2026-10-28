@@ -1,7 +1,7 @@
 <section class="login tarjeta">
   <div class="tarjeta__cuerpo">
-    <h1>Administración de permisos</h1>
-    <p class="texto-suave intro">Acceso de demostración para personal municipal.</p>
+    <h1>Permisos municipales</h1>
+    <p class="texto-suave intro">Ingresa al portal ciudadano o al panel de administración.</p>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="campo-grupo">
@@ -45,6 +45,8 @@
         <span class="girador" *ngIf="cargando" aria-hidden="true"></span>
         {{ cargando ? 'Ingresando...' : 'Ingresar' }}
       </button>
+
+      <p class="texto-suave intro">Cuenta de demostración ciudadana: jerrykairox@gmail.com · clave 123456.</p>
 
       <p class="texto-suave intro">
         ¿No tienes cuenta? <a routerLink="/auth/register">Regístrate como ciudadano</a>

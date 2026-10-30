@@ -94,7 +94,6 @@ La aplicación se recarga automáticamente al guardar cambios en los archivos fu
 | Perfil | Correo | Contraseña | Información disponible |
 | --- | --- | --- | --- |
 | Administrador | `admin@municipal.cl` | `1234` | Gestión de solicitudes, catálogo, estadísticas y perfil administrativo. |
-| Ciudadano | `jerrykairox@gmail.com` | `1234` | Una patente comercial emitida y una solicitud en revisión. |
 
 También puedes registrar una cuenta nueva desde `/auth/register`. Toda cuenta creada recibe automáticamente el rol de ciudadano.
 

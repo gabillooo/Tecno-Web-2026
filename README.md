@@ -76,7 +76,7 @@ npm --version
 3. Instala las dependencias:
 
    ```bash
-   npm install
+   npm install -g @angular/cli@15
    ```
 
 4. Inicia el servidor de desarrollo:

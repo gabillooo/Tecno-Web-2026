@@ -33,10 +33,10 @@ export class MisPatentesComponent implements OnInit {
       : of([]);
 
     this.patentesEmitidas$ = solicitudes$.pipe(
-      map((solicitudes) => solicitudes.filter((solicitud) => solicitud.estado === EstadoSolicitud.EMITIDA))
+      map((solicitudes) => solicitudes.filter((solicitud) => solicitud.estado === EstadoSolicitud.CERRADO))
     );
     this.solicitudesPatentes$ = solicitudes$.pipe(
-      map((solicitudes) => solicitudes.filter((solicitud) => solicitud.estado !== EstadoSolicitud.EMITIDA))
+      map((solicitudes) => solicitudes.filter((solicitud) => solicitud.estado !== EstadoSolicitud.CERRADO))
     );
   }
 

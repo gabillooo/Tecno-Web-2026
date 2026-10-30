@@ -8,6 +8,7 @@ import { PerfilCiudadanoComponent } from './pages/perfil/perfil-ciudadano.compon
 
 import { PermisosDisponiblesComponent } from './pages/permisos-disponibles/permisos-disponibles.component';
 import { MisSolicitudesComponent } from './pages/solicitudes/mis-solicitudes.component';
+import { MisPatentesComponent } from './pages/mis-patentes/mis-patentes.component';
 
 const routes: Routes = [
   { path: 'solicitudes', component: MisSolicitudesComponent },
@@ -15,11 +16,12 @@ const routes: Routes = [
   { path: 'permisos/:permisoId/solicitar', component: SolicitarTramiteComponent },
   { path: 'permisos', component: PermisosDisponiblesComponent },
   { path: 'perfil', component: PerfilCiudadanoComponent },
+  { path: 'mis-patentes', component: MisPatentesComponent },
   { path: '', pathMatch: 'full', component: HomeCiudadanoComponent },
 ];
 
 @NgModule({
-  declarations: [SolicitarTramiteComponent, HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent, MisSolicitudesComponent],
+  declarations: [SolicitarTramiteComponent, HomeCiudadanoComponent, PerfilCiudadanoComponent, PermisosDisponiblesComponent, MisSolicitudesComponent, MisPatentesComponent],
   imports: [CommonModule, ReactiveFormsModule, RouterModule.forChild(routes)],
 })
 export class CiudadanoModule {}

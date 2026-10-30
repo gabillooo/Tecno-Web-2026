@@ -21,6 +21,7 @@ const ENLACES_ADMIN: EnlaceNavbar[] = [
 const ENLACES_CIUDADANO: EnlaceNavbar[] = [
   { etiqueta: 'Inicio', ruta: '/ciudadano', activoSi: (url) => url === '/ciudadano' },
   { etiqueta: 'Mis trámites', ruta: '/ciudadano/solicitudes', activoSi: (url) => url.startsWith('/ciudadano/solicitudes') },
+  { etiqueta: 'Mis patentes', ruta: '/ciudadano/mis-patentes', activoSi: (url) => url.startsWith('/ciudadano/mis-patentes') },
   { etiqueta: 'Permisos disponibles', ruta: '/ciudadano/permisos', activoSi: (url) => url.startsWith('/ciudadano/permisos') },
 ];
 

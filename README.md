@@ -82,7 +82,7 @@ npm --version
 4. Inicia el servidor de desarrollo:
 
    ```bash
-   npm start
+   ng s
    ```
 
 5. Abre [http://localhost:4200](http://localhost:4200) en el navegador.

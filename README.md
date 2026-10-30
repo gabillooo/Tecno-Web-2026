@@ -59,7 +59,7 @@ Aplicación web académica desarrollada con Angular para simular la administraci
 
 Antes de ejecutar el proyecto, instala:
 
-- [Node.js](https://nodejs.org/) 18 o superior.
+- [Node.js](https://nodejs.org/) 18.20.8
 - npm, incluido con Node.js.
 
 Puedes comprobar las versiones instaladas con:
@@ -82,7 +82,7 @@ npm --version
 4. Inicia el servidor de desarrollo:
 
    ```bash
-   ng s
+   ng serve
    ```
 
 5. Abre [http://localhost:4200](http://localhost:4200) en el navegador.

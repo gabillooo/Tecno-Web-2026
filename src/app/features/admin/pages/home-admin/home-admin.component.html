@@ -1,39 +1,44 @@
-<h1>Bienvenido</h1>
+<section class="admin-ayuda" aria-labelledby="ayuda-titulo">
+  <div class="admin-ayuda__fondo" aria-hidden="true"></div>
+  <div class="admin-ayuda__panel">
+    <span class="sobrelinea">PANEL DE ADMINISTRACIÓN</span>
+    <h1 id="ayuda-titulo">¿Qué necesitas gestionar?</h1>
+    <div class="atajos">
+      <a routerLink="/admin/solicitudes"><span class="atajos__marca"></span>Revisar solicitudes</a>
+      <a routerLink="/admin/catalogo"><span class="atajos__marca"></span>Administrar permisos</a>
+      <a routerLink="/admin/estadisticas"><span class="atajos__marca"></span>Ver estadísticas</a>
+      <a routerLink="/admin/perfil"><span class="atajos__marca"></span>Actualizar mi perfil</a>
+    </div>
+  </div>
+</section>
 
-<p class="aviso">Gestiona los permisos y revisa la actividad desde un solo lugar.</p>
+<section class="seccion inicio-seccion" aria-labelledby="secciones-titulo">
+  <div class="encabezado-seccion">
+    <div>
+      <span class="sobrelinea">GESTIÓN MUNICIPAL</span>
+      <h2 id="secciones-titulo">Módulos de gestión</h2>
+    </div>
+    <p class="texto-suave">Administra la atención y los servicios municipales.</p>
+  </div>
 
-<section class="seccion" aria-labelledby="secciones-titulo">
-  <h2 id="secciones-titulo">Secciones del panel</h2>
-
-  <div class="grilla grilla--3">
-    <article class="tarjeta">
-      <div class="tarjeta__cuerpo carta">
-        <h3>Solicitudes</h3>
-        <p class="texto-suave">Revisa las solicitudes recibidas y aprueba o rechaza cada trámite.</p>
-        <div class="carta__pie">
-          <a class="boton" routerLink="/admin/solicitudes">Ver solicitudes</a>
-        </div>
-      </div>
+  <div class="grilla grilla--3 opciones">
+    <article class="tarjeta opcion">
+      <div class="opcion__icono" aria-hidden="true">01</div>
+      <h3>Solicitudes</h3>
+      <p class="texto-suave">Revisa las solicitudes recibidas y resuelve cada trámite.</p>
+      <a class="opcion__enlace" routerLink="/admin/solicitudes">Abrir solicitudes <span aria-hidden="true">→</span></a>
     </article>
-
-    <article class="tarjeta">
-      <div class="tarjeta__cuerpo carta">
-        <h3>Catálogo</h3>
-        <p class="texto-suave">Consulta y administra los tipos de permisos disponibles para la ciudadanía.</p>
-        <div class="carta__pie">
-          <a class="boton" routerLink="/admin/catalogo">Abrir catálogo</a>
-        </div>
-      </div>
+    <article class="tarjeta opcion">
+      <div class="opcion__icono" aria-hidden="true">02</div>
+      <h3>Catálogo</h3>
+      <p class="texto-suave">Administra los tipos de permisos disponibles para la ciudadanía.</p>
+      <a class="opcion__enlace" routerLink="/admin/catalogo">Administrar catálogo <span aria-hidden="true">→</span></a>
     </article>
-
-    <article class="tarjeta">
-      <div class="tarjeta__cuerpo carta">
-        <h3>Estadísticas</h3>
-        <p class="texto-suave">Explora indicadores sobre las solicitudes y su estado.</p>
-        <div class="carta__pie">
-          <a class="boton" routerLink="/admin/estadisticas">Ver estadísticas</a>
-        </div>
-      </div>
+    <article class="tarjeta opcion opcion--destacada">
+      <div class="opcion__icono" aria-hidden="true">03</div>
+      <h3>Estadísticas</h3>
+      <p class="texto-suave">Explora indicadores y actividad de las solicitudes.</p>
+      <a class="opcion__enlace" routerLink="/admin/estadisticas">Ver estadísticas <span aria-hidden="true">→</span></a>
     </article>
   </div>
 </section>

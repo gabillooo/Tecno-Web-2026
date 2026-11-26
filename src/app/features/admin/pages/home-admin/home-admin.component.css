@@ -1,26 +1,32 @@
-/* Tarjetas parejas: el pie con el botón se empuja al fondo con margin-top: auto,
-   así la rejilla queda alineada aunque los textos tengan largos distintos. */
-.tarjeta {
-  display: flex;
-}
-
-.carta {
-  display: flex;
-  flex: 1;
-  flex-direction: column;
-}
-
-.carta h3 {
-  min-height: 40px;
-}
-
-.carta p {
-  margin: 0 0 20px;
-  font-size: .95rem;
-}
-
-.carta__pie {
-  display: flex;
-  justify-content: flex-end;
-  margin-top: auto;
+:host { display: block; }
+.admin-ayuda { position: relative; margin: -24px -24px 0; padding: 34px max(7.5%, calc((100vw - 1250px) / 2)); overflow: hidden; background: repeating-linear-gradient(48deg, #d9f0f4 0 18px, #cbe8ee 18px 36px); }
+.admin-ayuda__fondo { position: absolute; inset: 0 0 0 54%; background: linear-gradient(110deg, rgb(17 47 78 / 8%), transparent); }
+.admin-ayuda__panel { position: relative; padding: 24px 28px; background: white; border-radius: 4px; box-shadow: 0 2px 12px rgb(17 47 78 / 12%); }
+.sobrelinea { color: var(--navy); font-size: .72rem; font-weight: 700; letter-spacing: .13em; }
+.admin-ayuda h1 { margin: 4px 0 18px; font-size: clamp(1.45rem, 2.5vw, 2rem); }
+.atajos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.atajos a { display: flex; min-height: 58px; align-items: center; gap: 12px; padding: 4px 16px; border-left: 4px solid var(--cian); color: var(--navy); font-weight: 600; line-height: 1.25; text-decoration: none; }
+.atajos a:hover { background: var(--celeste-claro); }
+.atajos__marca { flex: 0 0 8px; width: 8px; height: 8px; border: 2px solid var(--navy); border-radius: 50%; }
+.inicio-seccion { margin: 32px 0 48px; }
+.encabezado-seccion { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 20px; }
+.encabezado-seccion h2 { margin: 3px 0 0; }
+.encabezado-seccion > p { margin: 0 0 10px; }
+.opciones { gap: 18px; }
+.opcion { display: flex; min-height: 220px; flex-direction: column; align-items: flex-start; padding: 24px; border-top: 4px solid var(--cian); border-radius: 4px; }
+.opcion--destacada { border-top-color: var(--rojo); }
+.opcion__icono { display: grid; width: 38px; height: 38px; place-items: center; margin-bottom: 14px; border: 2px solid var(--navy); color: var(--navy); font-size: .78rem; font-weight: 700; }
+.opcion h3 { margin: 0 0 6px; font-size: 1.1rem; }
+.opcion p { margin: 0 0 18px; font-size: .95rem; }
+.opcion__enlace { display: inline-flex; gap: 8px; margin-top: auto; color: var(--navy); font-weight: 700; text-decoration: none; }
+.opcion__enlace:hover { color: var(--rojo); text-decoration: underline; }
+@media (max-width: 760px) { .atajos { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 8px; } }
+@media (max-width: 640px) {
+  .admin-ayuda { margin: -16px -16px 0; padding: 20px 16px; }
+  .admin-ayuda__panel { padding: 20px 18px; }
+  .atajos { grid-template-columns: 1fr; }
+  .atajos a { min-height: 44px; }
+  .encabezado-seccion { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .encabezado-seccion > p { margin: 0; }
+  .opcion { min-height: 190px; }
 }

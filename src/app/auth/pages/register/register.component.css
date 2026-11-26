@@ -1,37 +1,22 @@
-/* Mantiene la misma tarjeta centrada y compacta que la pantalla de acceso. */
 .register {
-  width: 100%;
-  max-width: 440px;
-  margin: 4vh auto 0;
+  width: min(100%, 760px);
+  margin: 3vh auto 0;
 }
-
-.register h1 {
-  font-size: 1.625rem;
-}
-
-.intro {
-  margin: 0 0 20px;
-  font-size: .95rem;
-}
-
-/* El formulario sigue el mismo flujo vertical que el login. */
-.register .grilla--2 {
-  grid-template-columns: 1fr;
-  gap: 0;
-}
-
-/* Las ayudas breves quedan pegadas al campo que explican */
-.campo-grupo .texto-suave {
-  margin: 0;
-}
-
-.pie-tarjeta {
-  margin: 20px 0 0;
-  text-align: center;
-}
-
-@media (max-width: 488px) {
-  .register {
-    width: calc(100% - 32px);
-  }
+.register .tarjeta__cuerpo { padding: 26px 30px 22px; }
+.register h1 { margin-bottom: 6px; font-size: 1.55rem; }
+.intro { margin: 0 0 18px; font-size: .95rem; }
+.register .grilla--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 20px; }
+.register .campo-grupo { gap: 4px; margin-bottom: 10px; }
+.register .etiqueta { font-size: .92rem; }
+.register .campo { min-height: 40px; padding: 7px 10px; font-size: .95rem; }
+.register .texto-suave { min-height: 18px; margin: 0; font-size: .78rem; }
+.documento-fila { display: grid; grid-template-columns: minmax(135px, .9fr) minmax(0, 1.2fr); gap: 7px; }
+.tipo-documento { padding-right: 4px; }
+.register .boton--bloque { min-height: 42px; }
+.pie-tarjeta { margin: 12px 0 0; text-align: center; }
+@media (max-width: 640px) {
+  .register { width: calc(100% - 24px); margin-top: 16px; }
+  .register .tarjeta__cuerpo { padding: 20px 18px; }
+  .register .grilla--2 { grid-template-columns: 1fr; gap: 0; }
+  .documento-fila { grid-template-columns: minmax(118px, .85fr) minmax(0, 1.15fr); }
 }

@@ -26,19 +26,28 @@
 
         <div class="campo-grupo">
           <label class="etiqueta" for="documento">Documento de identidad</label>
-          <input
-            id="documento"
-            class="campo"
-            type="text"
-            formControlName="documento"
-            [class.campo--error]="form.controls.documento.touched && form.controls.documento.invalid"
-            [attr.aria-invalid]="form.controls.documento.touched && form.controls.documento.invalid"
-          />
+          <div class="documento-fila">
+            <select id="tipoDocumento" class="campo tipo-documento" formControlName="tipoDocumento" (change)="actualizarValidacionDocumento()">
+              <option *ngFor="let tipo of tiposDocumento" [value]="tipo.valor">{{ tipo.etiqueta }}</option>
+            </select>
+            <input
+              id="documento"
+              class="campo"
+              type="text"
+              formControlName="documento"
+              [placeholder]="form.controls.tipoDocumento.value === 'cl' ? '12.345.678-5' : 'Número de documento'"
+              [class.campo--error]="form.controls.documento.touched && form.controls.documento.invalid"
+              [attr.aria-invalid]="form.controls.documento.touched && form.controls.documento.invalid"
+            />
+          </div>
           <p class="texto-suave" *ngIf="!(form.controls.documento.touched && form.controls.documento.invalid)">
-            RUT.
+            {{ ayudaDocumento }}
           </p>
           <p class="campo-error" *ngIf="form.controls.documento.touched && form.controls.documento.errors?.['required']">
             ✕ Ingresa tu documento de identidad.
+          </p>
+          <p class="campo-error" *ngIf="form.controls.documento.touched && form.controls.documento.errors?.['documentoInvalido']">
+            ✕ {{ errorDocumento }}
           </p>
         </div>
 
